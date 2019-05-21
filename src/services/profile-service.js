@@ -10,17 +10,45 @@ class ProfileService {
   // Retrieve the whole budget
   async getBudget(username) {
     console.log(this.config.MSRV_BASE_URL + "profile/budget?username=" + username);
-    // const response = await fetch(this.config.MSRV_BASE_URL + "profile/budget?userId=2");
-    // const status = await response.status;
-
-    // if (status == 200) {
-    //   this.categories = await response.json()
-    // }
       return fetch(this.config.MSRV_BASE_URL + "profile/budget?username=" + username)
       .then(response => {
         if (!response.ok) {
             this.handleResponseError(response);
         }
+        return response.json();
+      })
+      .catch(error => {
+        this.handleError(error);
+      });
+  }
+
+  // Create budget item
+  async createBudgetItem(username) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    const options = {
+      method: 'POST',
+      headers,
+      body: '{' +
+        '"username":"' + username +
+        ',"title":"' + 'Chwow' +
+        ',"onceoff":' + true +
+        ',"category":' +  "DEBIT_ORDER" +
+        ',"amount":' +  300 +
+        ',"date":"12/05/10"}'
+    }
+  
+    const request = new Request(this.config.MSRV_BASE_URL + "profile/budget", options);
+    console.log(options.body);
+
+    return fetch(request)
+      .then(response => {
+        if (!response.ok) {
+            console.log(response);
+            this.handleResponseError(response);
+        }
+        console.log(response);
         return response.json();
       })
       .catch(error => {

@@ -10,8 +10,6 @@ class Budget extends Component {
       budgetCategories: [],
       username: this.props.username
     };
-    console.log("this.state.username: " + this.state.username)
-    console.log("props.username: " + props.username)
   }
 
   componentDidMount() {
@@ -19,15 +17,18 @@ class Budget extends Component {
   }
 
   render() {
+    console.log(this.state.budgetCategories)
     return (
-      <MuiThemeProvider>
-      <BudgetList categories={this.state.budgetCategories} />
-      </MuiThemeProvider>
+      <div>
+        <MuiThemeProvider>
+        <h5>back</h5>
+        <BudgetList categories={this.state.budgetCategories} />
+        </MuiThemeProvider>
+      </div>
     );
   }
 
   getBudget() {
-    console.log(this.state.username)
     this.profileService.getBudget(this.state.username).then(
       (data) => {
         this.setState({ budgetCategories:data.categories })

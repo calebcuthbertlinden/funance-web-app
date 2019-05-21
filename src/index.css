@@ -14,56 +14,95 @@ grid-column: 2 / -2;
 grid-column: 1 / -1;
 }
 
+.h2 {
+    color: rgb(213, 219, 212);
+}
+
+.h3 { 
+    color: white;
+}
+
+.h4 {
+    color: white;
+}
+
 .hs {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(4, calc(25%));
     grid-template-rows: minmax(150px, 1fr);
+    padding: 0 40px;
+}
+
+.category-heading {
+    padding: 1%;
+    background: linear-gradient(-70deg, rgba(0, 0, 0, 100) 60%, #69b4be 60%);
+    box-shadow: 0 4px 8px 0 rgba(26, 22, 22, 0.329);
+    text-align: center;
+    color: #f7e981;
+    
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(4, calc(20%));
+    grid-template-rows: minmax(50px, 1fr);
     padding: 0 10px;
 }
 
-  /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
     background-color: transparent;
     width: 300px;
     height: 150px;
     margin: 3%;
-    perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  }
+}
   
-  /* This container is needed to position the front and back side */
-  .flip-card-inner {
+/* This container is needed to position the front and back side */
+.flip-card-inner {
     position: relative;
     width: 100%;
     height: 100%;
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
-  }
+}
   
-  /* Do an horizontal flip when you move the mouse over the flip box container */
-  .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-  }
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+transform: rotateY(180deg);
+}
   
-  /* Position the front and back side */
-  .flip-card-front, .flip-card-back {
+/* Position the front and back side */
+.flip-card-front-disabled, .flip-card-front, .flip-card-back {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-  }
+}
   
   /* Style the front side (fallback if image is missing) */
   .flip-card-front {
-    background-color:  #FFFFFF;
-    color: black;
+    /* background-color: rgb(40, 46, 40); */
+    color: white;
+    background: linear-gradient(-70deg, #181a19 30%, rgba(80, 0, 0, 0) 10%), url('open-sign.jpg');
+  }
+
+  .flip-card-front-disabled {
+    /* background-color: rgb(40, 46, 40); */
+    color: white;
+    background: linear-gradient(-70deg, #181a19 30%, rgba(80, 0, 0, 0) 10%), url('mountain.jpeg');
   }
   
   /* Style the back side */
   .flip-card-back {
-    background-color: rgb(235, 207, 207);
+    background-color: #181a19;
     color: white;
     transform: rotateY(180deg);
   }
+
+  .budget-item-button-add {
+    background-color: #606060;
+    color: white;
+  }
+
+  a { color: #181a19; }
