@@ -22,7 +22,7 @@ class Budget extends Component {
       <div>
         <MuiThemeProvider>
         <h5>back</h5>
-        <BudgetList categories={this.state.budgetCategories} />
+        <BudgetList categories={this.state.budgetCategories} username={this.state.username} />
         </MuiThemeProvider>
       </div>
     );

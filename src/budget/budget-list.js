@@ -3,7 +3,7 @@ import '../index.css'
 import Category from './budget-categories.js'
 import {Helmet} from 'react-helmet';
 
-const BudgetList = ({ categories }) => {
+const BudgetList = ({ categories, username }) => {
 
     return (
     <div>
@@ -20,7 +20,7 @@ const BudgetList = ({ categories }) => {
                         <h2>{budgetCategory.category}</h2>
                         </center>
                     </div>
-                    <Category budgetList={budgetCategory.budget}/>
+                    <Category budgetList={budgetCategory.budget} category={budgetCategory.category} username={username}/>
                 </div>
                 ))}
             </div>

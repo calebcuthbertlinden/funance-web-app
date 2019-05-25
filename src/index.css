@@ -31,12 +31,12 @@ grid-column: 1 / -1;
     grid-gap: 10px;
     grid-template-columns: repeat(4, calc(25%));
     grid-template-rows: minmax(150px, 1fr);
-    padding: 0 40px;
+    padding: 0 20px;
 }
 
 .category-heading {
     padding: 1%;
-    background: linear-gradient(-70deg, rgba(0, 0, 0, 100) 60%, #69b4be 60%);
+    background: linear-gradient(-70deg, #333333 60%, #69b4be 60%);
     box-shadow: 0 4px 8px 0 rgba(26, 22, 22, 0.329);
     text-align: center;
     color: #f7e981;
@@ -45,7 +45,21 @@ grid-column: 1 / -1;
     grid-gap: 10px;
     grid-template-columns: repeat(4, calc(20%));
     grid-template-rows: minmax(50px, 1fr);
-    padding: 0 10px;
+    padding: 10px 10px;
+}
+
+.category-empty-description {
+    padding: 2%;
+    margin: 1%;
+    background: linear (-70deg, rgba(0, 0, 0, 100) 60%);
+    box-shadow: 0 4px 8px 0 rgba(26, 22, 22, 0.329);
+    color: #000000;
+    
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(1, calc(100%));
+    grid-template-rows: minmax(50px, 1fr);
+    padding: 15px 0px;
 }
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
@@ -82,20 +96,18 @@ transform: rotateY(180deg);
   
   /* Style the front side (fallback if image is missing) */
   .flip-card-front {
-    /* background-color: rgb(40, 46, 40); */
-    color: white;
-    background: linear-gradient(-70deg, #181a19 30%, rgba(80, 0, 0, 0) 10%), url('open-sign.jpg');
+    color:  #181a19;
+    background: linear-gradient(-90deg, #f7f6f2 100%, #333333 100%);
   }
 
   .flip-card-front-disabled {
-    /* background-color: rgb(40, 46, 40); */
     color: white;
     background: linear-gradient(-70deg, #181a19 30%, rgba(80, 0, 0, 0) 10%), url('mountain.jpeg');
   }
   
   /* Style the back side */
   .flip-card-back {
-    background-color: #181a19;
+    background-color:#333333;
     color: white;
     transform: rotateY(180deg);
   }

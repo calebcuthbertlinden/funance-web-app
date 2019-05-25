@@ -36,7 +36,8 @@ class App extends React.Component {
             isPaused:false,
             checked:false,
             showOnboarding:false,
-            isLoading:false
+            isLoading:false,
+            errorMessage:"You have entered incorrect information."
         }
         this.userService = new UserService();
         this.handleUserNameChange = this.handleUserNameChange.bind(this);
@@ -111,15 +112,6 @@ class App extends React.Component {
             }
           };
 
-          const keysOptions = {
-            loop: true,
-            autoplay: true, 
-            animationData: keysAnimation.default,
-            rendererSettings: {
-              preserveAspectRatio: 'xMidYMid slice'
-            }
-          };
-
           const coinsOption = {
             loop: true,
             autoplay: true, 
@@ -140,24 +132,24 @@ class App extends React.Component {
                             contentLabel="Example Modal">
                             <div>
                                 <center>
-                                <h3>Welcome to Funance!</h3>
-                                <Helmet>
-                                    <style>{'body { background-color: #f8f8f8; }'}</style>
-                                </Helmet><Lottie options={coinsOption}
-                                    height={400}
-                                    width={400}
-                                    isStopped={this.state.isStopped}
-                                    isPaused={this.state.isPaused}/>
-                                <MuiThemeProvider>
-                                    We hope you learn alot.
-                                    <br/>
-                                    We have setup a sample budget item to get you started.
-                                    <br/>
-                                    You've also earned yourself a 100 coins for signing up.
-                                    <br/>
-                                    <br/>
-                                    <RaisedButton label="continue" primary={true} style={style} onClick={() => this.exitOnBoarding()}/>
-                                </MuiThemeProvider>
+                                    <h3>Welcome to Funance!</h3>
+                                    <Helmet>
+                                        <style>{'body { background-color: #f8f8f8; }'}</style>
+                                    </Helmet><Lottie options={coinsOption}
+                                        height={400}
+                                        width={400}
+                                        isStopped={this.state.isStopped}
+                                        isPaused={this.state.isPaused}/>
+                                    <MuiThemeProvider>
+                                        We hope you learn alot.
+                                        <br/>
+                                        We have setup a sample budget item to get you started.
+                                        <br/>
+                                        You've also earned yourself a 100 coins for signing up.
+                                        <br/>
+                                        <br/>
+                                        <RaisedButton label="continue" primary={true} style={style} onClick={() => this.exitOnBoarding()}/>
+                                    </MuiThemeProvider>
                                 </center>
                             </div>
                         </Modal>
@@ -187,61 +179,63 @@ class App extends React.Component {
                                     isPaused={this.state.isPaused}/>   
 
                     <MuiThemeProvider>
-                                    
-                        <Helmet>
-                            <style>{'body { background-color: #DFDFDF; }'}</style>
-                        </Helmet>
-                        
-                        <h2>Funance</h2>
-                        <h4>Join Funance now. The best way to learn how to manage your finances. </h4>
-                        <h4>Keep engagement through being rewarded for checking off your payments</h4>
 
-                        <div>
-                            <TextField
-                                hintText="Enter your email"
-                                floatingLabelText="Email"
-                                value={this.state.value} onChange={this.handleEmailChange}
-                                />
-                            <TextField
-                                hintText="Enter your Username"
-                                floatingLabelText="Username"
-                                value={this.state.value} onChange={this.handleUserNameChange}
-                                />
-                            <br/>
-                            <TextField
-                                hintText="Enter your First name"
-                                floatingLabelText="First name"
-                                value={this.state.value} onChange={this.handleFirstNameChange}
-                                />
-                            <TextField
-                                hintText="Enter your Last name"
-                                floatingLabelText="Last name"
-                                value={this.state.value} onChange={this.handleLastNameChange}
-                                />
-                            <br/>
-                            <TextField
-                                type="password"
-                                hintText="Enter your Password"
-                                floatingLabelText="Password"
-                                value={this.state.password} onChange={this.handlePasswordNameChange}
-                                />
-                            <TextField
-                                type="password"
-                                hintText="Confirm your Password"
-                                floatingLabelText="Confirm password"
-                                value={this.state.confirmPassword} onChange={this.handleConfirmPasswordNameChange}
-                                />
-                            <br/>
-                            <br/>
+                        <div>     
+                            <Helmet>
+                                <style>{'body { background-color: #DFDFDF; }'}</style>
+                            </Helmet>
+                            
+                            <h2>Funance</h2>
+                            <h4>Join Funance now. The best way to learn how to manage your finances. </h4>
+                            <h4>Keep engagement through being rewarded for checking off your payments</h4>
 
-                            <input type="checkbox" onChange={this.handleCheck} defaultChecked={this.state.checked}/>
-                            Have you read and accepted the <a href="second.html">Terms and conditions?</a>
-                            <br/>
-                            <br/>
+                            <div>
+                                <TextField
+                                    hintText="Enter your email"
+                                    floatingLabelText="Email"
+                                    value={this.state.value} onChange={this.handleEmailChange}
+                                    />
+                                <TextField
+                                    hintText="Enter your Username"
+                                    floatingLabelText="Username"
+                                    value={this.state.value} onChange={this.handleUserNameChange}
+                                    />
+                                <br/>
+                                <TextField
+                                    hintText="Enter your First name"
+                                    floatingLabelText="First name"
+                                    value={this.state.value} onChange={this.handleFirstNameChange}
+                                    />
+                                <TextField
+                                    hintText="Enter your Last name"
+                                    floatingLabelText="Last name"
+                                    value={this.state.value} onChange={this.handleLastNameChange}
+                                    />
+                                <br/>
+                                <TextField
+                                    type="password"
+                                    hintText="Enter your Password"
+                                    floatingLabelText="Password"
+                                    value={this.state.password} onChange={this.handlePasswordNameChange}
+                                    />
+                                <TextField
+                                    type="password"
+                                    hintText="Confirm your Password"
+                                    floatingLabelText="Confirm password"
+                                    value={this.state.confirmPassword} onChange={this.handleConfirmPasswordNameChange}
+                                    />
+                                <br/>
+                                <br/>
+
+                                <input type="checkbox" onChange={this.handleCheck} defaultChecked={this.state.checked}/>
+                                Have you read and accepted the <a href="second.html">Terms and conditions?</a>
+                                <br/>
+                                <br/>
+                            </div>
+
+                            <RaisedButton label="Back" primary={false} onClick={() => this.backFromRegister()}/>
+                            <RaisedButton label="Register" disabled={this.state.checked===false} primary={true} style={style} onClick={() => this.register()}/>
                         </div>
-
-                    <RaisedButton label="Back" primary={false} onClick={() => this.backFromRegister()}/>
-                    <RaisedButton label="Register" disabled={this.state.checked===false} primary={true} style={style} onClick={() => this.register()}/>
                     </MuiThemeProvider>
                     
                     <div>
@@ -275,31 +269,36 @@ class App extends React.Component {
                                             width={400}
                                             isStopped={this.state.isStopped}
                                             isPaused={this.state.isPaused}/>
-        
-                        <MuiThemeProvider>
-                            
+    
                         <h2>Funance</h2>
 
                         <Helmet>
                             <style>{'body { background-color: #DFDFDF; }'}</style>
                         </Helmet>
-                        <div>
-                        <TextField
-                            hintText="Enter your Username"
-                            floatingLabelText="Username"
-                            value={this.state.value} onChange={this.handleUserNameChange}
-                            />
-                        <br/>
-                        <TextField
-                            hintText="Enter your Password"
-                            floatingLabelText="Password"
-                            value={this.state.value} onChange={this.handlePasswordNameChange}
-                            />
-                        <br/>
-                        <RaisedButton label="Submit" primary={true} style={style} onClick={() => this.login()}/>
-                        </div>
-                        <div onClick={() => this.navigateToRegister()}><h5>No account? Click here to register.</h5></div>
-                        
+                        <MuiThemeProvider>
+                            <div>
+                                <div>
+                                <TextField
+                                    hintText="Enter your Username"
+                                    floatingLabelText="Username"
+                                    value={this.state.value} onChange={this.handleUserNameChange}
+                                    />
+                                <br/>
+                                <TextField
+                                    hintText="Enter your Password"
+                                    floatingLabelText="Password"
+                                    value={this.state.value} onChange={this.handlePasswordNameChange}
+                                    />
+                                <br/>
+                                <RaisedButton label="Submit" primary={true} style={style} onClick={() => this.login()}/>
+                                </div>
+                                <div onClick={() => this.navigateToRegister()}>
+                                    <h5>No account? Click here to register.</h5>
+                                </div>
+                            
+                            </div>
+                        </MuiThemeProvider>
+                            
                         {/* Loader modal */}
                         <Modal
                             isOpen={this.state.isLoading}
@@ -329,10 +328,9 @@ class App extends React.Component {
                                     isStopped={this.state.isStopped}
                                     isPaused={this.state.isPaused}/>
                                 </center>
-                                <h4>You have entered incorrect information.</h4>
+                                <h4>{this.state.errorMessage}</h4>
                             </div>
                         </Modal>
-                        </MuiThemeProvider>
                     </center>
                 </div> 
             );
@@ -344,11 +342,21 @@ class App extends React.Component {
         this.userService.login(this.state.username, this.state.password).then(
             (data) => {
                 console.log(data);
-                if (data.status === "LOGGED_IN") {
-                    this.setState({loggedIn:true});
-                } else {
+                if (data === undefined || data == null) {
                     this.setState({isIncorrectInfo:true})
+                    this.setState({errorMessage:"There was an error trying to login. Please try again or contact *** for assistance."})
+                } else {
+                    if (data.status === "LOGGED_IN") {
+                        this.setState({loggedIn:true});
+                    } else if (data.status === "NO_ACCOUNT") {
+                        this.setState({isIncorrectInfo:true})
+                        this.setState({errorMessage:"This account does not exist. Make sure you entered the details correctly."})
+                    } else {
+                        this.setState({isIncorrectInfo:true})
+                        this.setState({errorMessage:"You have entered incorrect login details. Please try again."})
+                    }
                 }
+                
                 this.setState({isLoading:false})
           });
     }
@@ -358,7 +366,10 @@ class App extends React.Component {
         this.userService.register(this.state.username, this.state.password, this.state.firstname, this.state.lastname, "email@email.com").then(
             (data) => {
                 console.log(data);
-                if (data.status === "CREATED") {
+                if (data === undefined || data == null) {
+                    this.setState({isIncorrectInfo:true})
+                    this.setState({errorMessage:"There was an error trying to register. Please try again or contact *** for assistance."})
+                } else if (data.status === "CREATED") {
                     this.setState({loggedIn:true});
                     this.setState({showOnboarding:true});
                 }

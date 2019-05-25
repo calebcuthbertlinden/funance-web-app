@@ -1,8 +1,6 @@
 import Configuration from './configuration';
 
 class ProfileService {
-
-
   constructor() {
     this.config = new Configuration();
   }
@@ -15,6 +13,7 @@ class ProfileService {
         if (!response.ok) {
             this.handleResponseError(response);
         }
+        console.log(response);
         return response.json();
       })
       .catch(error => {
@@ -23,7 +22,7 @@ class ProfileService {
   }
 
   // Create budget item
-  async createBudgetItem(username) {
+  async createBudgetItem(username, title, onceoff, category, amount, date) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
@@ -32,14 +31,14 @@ class ProfileService {
       headers,
       body: '{' +
         '"username":"' + username +
-        ',"title":"' + 'Chwow' +
-        ',"onceoff":' + true +
-        ',"category":' +  "DEBIT_ORDER" +
-        ',"amount":' +  300 +
-        ',"date":"12/05/10"}'
+        '","title":"' + title +
+        '","onceoff":' + onceoff +
+        ',"category":"' + category +
+        '","amount":' +  amount +
+        ',"date":"'+ date + '"}'
     }
   
-    const request = new Request(this.config.MSRV_BASE_URL + "profile/budget", options);
+    const request = new Request(this.config.MSRV_BASE_URL + "profile/budget/item", options);
     console.log(options.body);
 
     return fetch(request)
