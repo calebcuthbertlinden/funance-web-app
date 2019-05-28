@@ -5,9 +5,10 @@ import TextField from 'material-ui/TextField';
 import ProfileService from '../services/profile-service.js';
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import Button from '@material-ui/core/Button';
 
 import Lottie from 'react-lottie'
-import * as animationDebit from '../animations/icon-debit.json'
+import * as animationDebit from '../animations/attachement.json'
 
 class Category extends Component {
 
@@ -24,9 +25,10 @@ class Category extends Component {
             isPaused:false,
             isLoading:false,
             newItemTitle:"",
-            newItemCost:"",
+            newItemCost:0,
             newItemDate:"",
             newItemOnceOff:false,
+            newItemDescription:false
         };
 
         this.profileService = new ProfileService();
@@ -36,6 +38,7 @@ class Category extends Component {
         this.handleCostChange = this.handleCostChange.bind(this);
         this.handlePaymentDate = this.handlePaymentDate.bind(this);
         this.handleOnceOff = this.handleOnceOff.bind(this);
+        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     }
 
     openModal() {
@@ -62,16 +65,24 @@ class Category extends Component {
         this.setState({newItemOnceOff: true});
     }
 
+    handleDescriptionChange(event) {
+        this.setState({newItemDescription: event.target.value});
+    }
+    
+    updateAmountPaid(amount) {
+        this.props.updateAmountPaid(amount);
+    }
+
     createBudgetItem() {
         this.setState({isLoading:true});
         console.log(this.state.budgetList);
-        //username, title, onceoff, category, amount, date
         this.profileService.createBudgetItem(this.state.username, 
             this.state.newItemTitle, 
             this.state.newItemOnceOff, 
             this.state.category,
             this.state.newItemCost,
-            this.state.newItemDate).then(
+            this.state.newItemDate,
+            this.state.newItemDescription).then(
             (data) => {
                 if (this.state.budgetList == null) {
                     var newBudgetList = [data];
@@ -82,7 +93,9 @@ class Category extends Component {
                     }));
                 }
 
+                this.props.updateAmountToPay(this.state.newItemCost);
                 this.setState({modalIsOpen:false});
+                this.props.view();
            
         });
     }
@@ -99,17 +112,20 @@ class Category extends Component {
 
         if (this.state.budgetList !== null) {
             return (
-                <div>
-                    {this.state.budgetList.map((uBudgetItem) => (
-                            <BudgetItem budgetItem={uBudgetItem}/>
+                <div id="outer">
+                    <Button variant="outlined" onClick={this.openModal} primary={true} style={style}>Add another</Button>
+                    <div id="inner">
+                        {this.state.budgetList.map((uBudgetItem) => (
+                            <BudgetItem updateAmountPaid={this.updateAmountPaid.bind(this)} budgetItem={uBudgetItem}/>
                         ))}
-                    <RaisedButton label="Add another" onClick={this.openModal} primary={true} style={style}/>
+                    </div>
                     <Modal
                         isOpen={this.state.modalIsOpen}
                         onRequestClose={this.closeModal}
                         style={customStyles}
                         contentLabel="Example Modal">
                         <MuiThemeProvider>
+                            <h3>Capture new item</h3>
                             <div>
                                 <TextField
                                     hintText="Enter the title of this item"
@@ -133,6 +149,12 @@ class Category extends Component {
                                     hintText="Date to be payed"
                                     floatingLabelText="Choose date"
                                     value={this.state.value} onChange={this.handlePaymentDate}
+                                    />
+                                <br/>
+                                <TextField
+                                    hintText="Description"
+                                    floatingLabelText="Describe"
+                                    value={this.state.value} onChange={this.handleDescriptionChange}
                                     />
                                 <br/>
                                 <RaisedButton label="Submit" onClick={() => this.createBudgetItem()} primary={true} style={style}/>
@@ -158,7 +180,7 @@ class Category extends Component {
                         this.setState({message:"The rarer purchases of valuable items. Something out of the ordinary, but not every day."});
                         break;
                     default:
-                        this.setState({message:"WAaaaaahhahahhhaaaaaaaaaaaa"});
+                        this.setState({message:"Unknown category"});
                         break;
                 }
                 
@@ -166,54 +188,64 @@ class Category extends Component {
             }
 
             return (
-                <MuiThemeProvider>
-                    <div class="category-empty-description">
-                        <center>
-                            <Lottie options={debitOptions}
-                                    height={100}
-                                    width={100}
-                                    isStopped={this.state.isStopped}
-                                    isPaused={this.state.isPaused}/>   
-                            {this.state.message}
-                        </center>
-                    </div>
-                    <RaisedButton label="Add new" primary={true} type="outline" style={style} onClick={this.openModal}/>
-                    <Modal
-                        isOpen={this.state.modalIsOpen}
-                        onRequestClose={this.closeModal}
-                        style={customStyles}
-                        contentLabel="Example Modal">
+                    <div id="outer">
                         <MuiThemeProvider>
-                            <div>
-                                <TextField
-                                    hintText="Enter the title of this item"
-                                    floatingLabelText="Title"
-                                    value={this.state.value} onChange={this.handleTitleChange}
-                                    />
-                                <br/>
-                                <TextField
-                                    hintText="Cost of the item"
-                                    floatingLabelText="Cost"
-                                    value={this.state.value} onChange={this.handleCostChange}
-                                    />
-                                <br/>
-                                <TextField
-                                    hintText="Once off?"
-                                    floatingLabelText="True of false"
-                                    value={this.state.value} onChange={this.handleOnceOff}
-                                    />
-                                <br/>
-                                <TextField
-                                    hintText="Date to be payed"
-                                    floatingLabelText="Choose date"
-                                    value={this.state.value} onChange={this.handlePaymentDate}
-                                    />
-                                <br/>
-                                <RaisedButton label="Submit" onClick={() => this.createBudgetItem()} primary={true} style={style}/>
-                            </div>
+                        <Button variant="outlined" label="Add new" primary={true} type="outline" style={style} onClick={this.openModal}>Add new</Button>
                         </MuiThemeProvider>
-                    </Modal>
-                </MuiThemeProvider>);
+                        <div class="category-empty-description">
+                            <center>
+                                <span id="parent-element">
+                                    <Lottie id="animation-lottie" options={debitOptions}
+                                        height={150}
+                                        width={150}
+                                        isStopped={this.state.isStopped}
+                                        isPaused={this.state.isPaused}/>   
+                                    {this.state.message}
+                                </span>
+                            </center>
+                        </div>
+                        <Modal
+                            isOpen={this.state.modalIsOpen}
+                            onRequestClose={this.closeModal}
+                            style={customStyles}
+                            contentLabel="Example Modal">
+                            <MuiThemeProvider>
+                                <div>
+                                    <TextField
+                                        hintText="Enter the title of this item"
+                                        floatingLabelText="Title"
+                                        value={this.state.value} onChange={this.handleTitleChange}
+                                        />
+                                    <br/>
+                                    <TextField
+                                        hintText="Cost of the item"
+                                        floatingLabelText="Cost"
+                                        value={this.state.value} onChange={this.handleCostChange}
+                                        />
+                                    <br/>
+                                    <TextField
+                                        hintText="Once off?"
+                                        floatingLabelText="True of false"
+                                        value={this.state.value} onChange={this.handleOnceOff}
+                                        />
+                                    <br/>
+                                    <TextField
+                                        hintText="Date to be payed"
+                                        floatingLabelText="Choose date"
+                                        value={this.state.value} onChange={this.handlePaymentDate}
+                                        />
+                                    <br/>
+                                    <TextField
+                                        hintText="Description"
+                                        floatingLabelText="Describe"
+                                        value={this.state.value} onChange={this.handleDescriptionChange}
+                                        />
+                                    <br/>
+                                    <RaisedButton label="Submit" onClick={() => this.createBudgetItem()} primary={true} style={style}/>
+                                </div>
+                            </MuiThemeProvider>
+                        </Modal>
+                    </div>);
         }
     }
 }
@@ -225,10 +257,10 @@ const customStyles = {
         right                 : 'auto',
         bottom                : 'auto',
         marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
+        transform             : 'translate(-50%, -50%)',
+        background            : '#f7f6f2'  
     }
 };
-
 
 const style = {
     margin: 15,

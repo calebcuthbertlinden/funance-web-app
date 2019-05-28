@@ -2,22 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import UserService from './services/user-service.js'
+import Dashboard from './dashboard-component.js';
 
-import Budget from './budget/budget-list-component.js';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import Button from '@material-ui/core/Button';
   
 import Lottie from 'react-lottie'
 import * as animationData from './animations/scheme.json'
 import * as loaderAnimation from './animations/loader-themed.json'
 import * as incorrectAnimation from './animations/incorrect.json'
-import * as keysAnimation from './animations/keys.json'
 import * as coinsAnimation from './animations/coins.json'
+
 
 import {Helmet} from 'react-helmet';
 import './index.css';
 import Modal from 'react-modal';
+
+
+import { MuiThemeProvider, getMuiTheme } from 'material-ui/styles'
+import {teal500, cyan500} from 'material-ui/styles/colors';
 
 class App extends React.Component {
     constructor(props) {
@@ -37,7 +41,8 @@ class App extends React.Component {
             checked:false,
             showOnboarding:false,
             isLoading:false,
-            errorMessage:"You have entered incorrect information."
+            errorMessage:"You have entered incorrect information.",
+            newUser:false
         }
         this.userService = new UserService();
         this.handleUserNameChange = this.handleUserNameChange.bind(this);
@@ -83,6 +88,7 @@ class App extends React.Component {
     closeModal() {
         this.setState({isIncorrectInfo: false});
     }
+    
 
     render() {
         const defaultOptions = {
@@ -120,6 +126,13 @@ class App extends React.Component {
               preserveAspectRatio: 'xMidYMid slice'
             }
           };
+
+        const theme = getMuiTheme({
+            palette: {
+              primary: teal500,
+              secondary: cyan500,
+            },
+        });
           
           if (this.state.loggedIn === true) {
             console.log("logged in");
@@ -141,13 +154,9 @@ class App extends React.Component {
                                         isStopped={this.state.isStopped}
                                         isPaused={this.state.isPaused}/>
                                     <MuiThemeProvider>
-                                        We hope you learn alot.
-                                        <br/>
-                                        We have setup a sample budget item to get you started.
-                                        <br/>
-                                        You've also earned yourself a 100 coins for signing up.
-                                        <br/>
-                                        <br/>
+                                        We hope you learn alot.<br/>
+                                        We have setup a sample budget item to get you started.<br/>
+                                        You've also earned yourself a 100 coins for signing up.<br/><br/>
                                         <RaisedButton label="continue" primary={true} style={style} onClick={() => this.exitOnBoarding()}/>
                                     </MuiThemeProvider>
                                 </center>
@@ -159,8 +168,9 @@ class App extends React.Component {
                         <Switch>
                             <Route
                                 path={'/'}
-                                component={() => <Budget
+                                component={() => <Dashboard
                                     username={this.state.username}
+                                    newUser={this.state.newUser}
                                 />}
                             />
                         </Switch>
@@ -178,17 +188,16 @@ class App extends React.Component {
                                     isStopped={this.state.isStopped}
                                     isPaused={this.state.isPaused}/>   
 
-                    <MuiThemeProvider>
+                    <div>     
+                        <Helmet>
+                            <style>{'body { background-color: #DFDFDF; }'}</style>
+                        </Helmet>
+                        
+                        <h2>Funance</h2>
+                        <h4>Join Funance now. The best way to learn how to manage your finances. </h4>
+                        <h4>Keep engagement through being rewarded for checking off your payments</h4>
 
-                        <div>     
-                            <Helmet>
-                                <style>{'body { background-color: #DFDFDF; }'}</style>
-                            </Helmet>
-                            
-                            <h2>Funance</h2>
-                            <h4>Join Funance now. The best way to learn how to manage your finances. </h4>
-                            <h4>Keep engagement through being rewarded for checking off your payments</h4>
-
+                        <MuiThemeProvider>
                             <div>
                                 <TextField
                                     hintText="Enter your email"
@@ -216,13 +225,13 @@ class App extends React.Component {
                                     type="password"
                                     hintText="Enter your Password"
                                     floatingLabelText="Password"
-                                    value={this.state.password} onChange={this.handlePasswordNameChange}
+                                    value={this.state.value} onChange={this.handlePasswordNameChange}
                                     />
                                 <TextField
                                     type="password"
                                     hintText="Confirm your Password"
                                     floatingLabelText="Confirm password"
-                                    value={this.state.confirmPassword} onChange={this.handleConfirmPasswordNameChange}
+                                    value={this.state.value} onChange={this.handleConfirmPasswordNameChange}
                                     />
                                 <br/>
                                 <br/>
@@ -232,11 +241,11 @@ class App extends React.Component {
                                 <br/>
                                 <br/>
                             </div>
-
-                            <RaisedButton label="Back" primary={false} onClick={() => this.backFromRegister()}/>
-                            <RaisedButton label="Register" disabled={this.state.checked===false} primary={true} style={style} onClick={() => this.register()}/>
-                        </div>
-                    </MuiThemeProvider>
+                    
+                            <Button style={style} onClick={() => this.backFromRegister()}>Back</Button>
+                            <Button style={style} onClick={() => this.register()}>Register</Button>
+                        </MuiThemeProvider>
+                    </div>
                     
                     <div>
                         <Modal
@@ -254,6 +263,23 @@ class App extends React.Component {
                                     isStopped={this.state.isStopped}
                                     isPaused={this.state.isPaused}/>
                                 </center>`
+                            </div>
+                        </Modal>
+
+                        {/* Incorrect info modal */}
+                        <Modal
+                            isOpen={this.state.isIncorrectInfo}
+                            onRequestClose={this.closeModal}
+                            style={customStyles}
+                            contentLabel="Example Modal">
+                            <div>
+                                <center><Lottie options={incorrect}
+                                    height={100}
+                                    width={100}
+                                    isStopped={this.state.isStopped}
+                                    isPaused={this.state.isPaused}/>
+                                </center>
+                                <h4>{this.state.errorMessage}</h4>
                             </div>
                         </Modal>
                     </div>
@@ -290,7 +316,7 @@ class App extends React.Component {
                                     value={this.state.value} onChange={this.handlePasswordNameChange}
                                     />
                                 <br/>
-                                <RaisedButton label="Submit" primary={true} style={style} onClick={() => this.login()}/>
+                                <Button variant="outlined" color="inherit" primary={true} type="outline" style={style} onClick={() => this.login()}>Login</Button>
                                 </div>
                                 <div onClick={() => this.navigateToRegister()}>
                                     <h5>No account? Click here to register.</h5>
@@ -365,10 +391,14 @@ class App extends React.Component {
         this.setState({isLoading:true})
         this.userService.register(this.state.username, this.state.password, this.state.firstname, this.state.lastname, "email@email.com").then(
             (data) => {
-                console.log(data);
+                console.log(data.status);
                 if (data === undefined || data == null) {
                     this.setState({isIncorrectInfo:true})
                     this.setState({errorMessage:"There was an error trying to register. Please try again or contact *** for assistance."})
+                } else if (data.status === "ALREADY_EXISTS") {
+                    console.log(data.status);
+                    this.setState({isIncorrectInfo:true})
+                    this.setState({errorMessage:"The chosen username is already taken. Please choose another."})
                 } else if (data.status === "CREATED") {
                     this.setState({loggedIn:true});
                     this.setState({showOnboarding:true});
@@ -393,6 +423,7 @@ class App extends React.Component {
 
     exitOnBoarding() {
         this.setState({showOnboarding:false})
+        this.setState({newUser:true})
     }
 }
 
@@ -400,15 +431,15 @@ const style = {
     margin: 15,
 };
 
-
 const customStyles = {
     content : {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : 'auto',
-        bottom                : 'auto',
-        marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
+        top         : '50%',
+        left        : '50%',
+        right       : 'auto',
+        bottom      : 'auto',
+        marginRight : '-50%',
+        transform   : 'translate(-50%, -50%)',
+        background  : '#f7f6f2'  
     }
 };
 

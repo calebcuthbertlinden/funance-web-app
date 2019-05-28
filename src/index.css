@@ -1,6 +1,8 @@
 body {
     font: 14px "Century Gothic", Futura, sans-serif;
     margin: 20px;
+    background-image: url("mountain.jpeg");
+    background-color: #cccccc;
 }
 
 .app {
@@ -8,10 +10,10 @@ body {
     grid-template-columns: 10px 1fr 10px;
 }
 .app > * {
-grid-column: 2 / -2;
+    grid-column: 2 / -2;
 }
 .app > .full {
-grid-column: 1 / -1;
+    grid-column: 1 / -1;
 }
 
 .h2 {
@@ -36,22 +38,23 @@ grid-column: 1 / -1;
 
 .category-heading {
     padding: 1%;
-    background: linear-gradient(-70deg, #333333 60%, #69b4be 60%);
+    background: linear-gradient(-70deg, #333333 60%, #3ab197 60%);
+    /* background: linear-gradient(-70deg, #333333 60%, #69b4be 60%); */
     box-shadow: 0 4px 8px 0 rgba(26, 22, 22, 0.329);
     text-align: center;
-    color: #f7e981;
+    color: #333333;
     
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(4, calc(20%));
-    grid-template-rows: minmax(50px, 1fr);
-    padding: 10px 10px;
+    grid-template-rows: minmax(30px, 1fr);
+    padding: 0px 10px;
 }
 
 .category-empty-description {
     padding: 2%;
     margin: 1%;
-    background: linear (-70deg, rgba(0, 0, 0, 100) 60%);
+    background: #f7f6f28e;
     box-shadow: 0 4px 8px 0 rgba(26, 22, 22, 0.329);
     color: #000000;
     
@@ -65,9 +68,11 @@ grid-column: 1 / -1;
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
     background-color: transparent;
-    width: 300px;
-    height: 150px;
-    margin: 3%;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(1, calc(100%));
+    grid-template-rows: minmax(100px, 1fr);
+    padding: 5px 0px;
 }
   
 /* This container is needed to position the front and back side */
@@ -82,7 +87,7 @@ grid-column: 1 / -1;
   
 /* Do an horizontal flip when you move the mouse over the flip box container */
 .flip-card:hover .flip-card-inner {
-transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
   
 /* Position the front and back side */
@@ -94,27 +99,130 @@ transform: rotateY(180deg);
     backface-visibility: hidden;
 }
   
-  /* Style the front side (fallback if image is missing) */
-  .flip-card-front {
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
     color:  #181a19;
     background: linear-gradient(-90deg, #f7f6f2 100%, #333333 100%);
+    vertical-align: center;
   }
 
-  .flip-card-front-disabled {
+.flip-card-front-disabled {
     color: white;
-    background: linear-gradient(-70deg, #181a19 30%, rgba(80, 0, 0, 0) 10%), url('mountain.jpeg');
+    background: #333333;
   }
   
-  /* Style the back side */
-  .flip-card-back {
+/* Style the back side */
+.flip-card-back {
     background-color:#333333;
     color: white;
     transform: rotateY(180deg);
+
   }
 
-  .budget-item-button-add {
+.budget-item-button-add {
     background-color: #606060;
     color: white;
   }
 
-  a { color: #181a19; }
+a { color: #181a19; }
+    
+#nav {
+  width: 100%;
+  float: left;
+  margin: -1em 0 1em 0;
+  padding: 0;
+	overflow: hidden;
+  list-style: none;
+  text-decoration: none;
+  background-color: #f2f2f2;
+}
+
+#nav-left {
+  float: left; 
+  text-decoration: none;
+  font-weight: bold;
+  list-style: none;
+  padding: 8px 20px;}
+
+#nav-right {
+  float: right;
+  text-decoration: none;
+  font-weight: bold;
+  list-style: none;
+  padding: 8px 20px;
+}
+
+#headerLayout {
+  width: 100%;
+  float: left; 
+  display: block;
+}
+
+#budgetHeader {
+    display: block;
+    float: left;
+    padding: 4px 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #333333;
+}
+
+#progressIndicator {
+    padding: 4px;
+    display: block;
+    float: right;
+    margin: 1%;
+    display: inline-block;
+}
+
+#progressIndicatorIcon {
+  display: block;
+  margin: 1% 0;
+}
+
+#parent-element {
+  padding: 4px 10px 5px 8px;
+  display: flex;
+  align-items: center;
+  float: right;
+}
+
+#parent-element-center {
+  padding: 4px 10px 5px 8px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+#onboarding-div {
+  /* display: flex; */
+  padding-top: 10%;
+  align-items: center;
+}
+
+#list-div {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+#outer {
+  display: flex;
+  flex-flow: column;
+  height: 800px;
+}
+
+#inner {
+  flex-grow : 1;
+  background-color: rgba(95, 95, 95, 0.527);
+  padding: 2px;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+#animation-lottie {
+  margin: -2% -2%;
+  padding: -4em -4em;
+}
