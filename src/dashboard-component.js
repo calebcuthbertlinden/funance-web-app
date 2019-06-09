@@ -294,7 +294,7 @@ class Dashboard extends Component {
         } else {
             return (
                 <div>
-                    <MuiThemeProvider>
+                    <MuiThemeProvider theme={theme}>
                         <ul id="nav">
                             <li id="nav-left"><Link to="/"><h3>back</h3></Link></li>
                             <li id="nav-right"><Link to="/profile"><h3>Profile</h3></Link></li>
