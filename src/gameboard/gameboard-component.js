@@ -8,7 +8,8 @@ class Gameboard extends Component {
         super(props);
         this.profileService = new ProfileService();
         this.state = {
-          username: this.props.username
+          username: this.props.username,
+          coins: 0
         };
       }
     
@@ -20,7 +21,9 @@ class Gameboard extends Component {
         return (
           <div>
             <MuiThemeProvider>
-            <h5>back</h5>
+
+              <h2>{this.state.coins}</h2>
+
             </MuiThemeProvider>
           </div>
         );
@@ -29,7 +32,8 @@ class Gameboard extends Component {
       getGameboard() {
         this.profileService.getGameboard(this.state.username).then(
           (data) => {
-            // TODO something with response
+            console.log(data);
+            this.setState({coins:data.coin})
         });
       }
     }
