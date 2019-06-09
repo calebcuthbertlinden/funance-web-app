@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import ProfileService from './services/profile-service.js';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Budget from './budget/budget-list-component.js';
 import Gameboard from './gameboard/gameboard-component.js';
+import FunancialAdvisor from './gameboard/funancial-advisor.js';
 
 import * as loaderAnimation from './animations/atmcash.json';
 import * as incorrectAnimation from './animations/moneystack.json';
 import * as coinsAnimation from './animations/coinstack.json';
 
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; 
+import Button from '@material-ui/core/Button';
 import Lottie from 'react-lottie'
 
 class Dashboard extends Component {
@@ -77,22 +77,33 @@ class Dashboard extends Component {
             }
         };
 
+        const theme = createMuiTheme({
+            palette: {
+              primary: {
+                  main: '#80cbc4'
+              },
+              secondary: {
+                main: '#004d40',
+              },
+            },
+          });
+
         if (this.state.newUser) {
 
             if (this.state.step == "STEP_ONE") {
                 return (
                     <div>
-                        <MuiThemeProvider>
+                        <MuiThemeProvider theme={theme}>
                             <div id="nav">
                                 <ul>
                                     <li id="nav-left"><Link to="/"><h3>back</h3></Link></li>
                                     <li id="nav-right"><Link to="/profile"><h3>Profile</h3></Link></li>
                                     <li id="nav-right"><Link to="/gameboard"><h3>Gameboard</h3></Link></li>
                                     <li id="nav-right"><Link to="/budget"><h3>Budget</h3></Link></li>
+                                    <li id="nav-right"><Link to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
                                 </ul>
                             </div>
                            
-                                
                             <Route
                                 path={'/gameboard'}
                                 component={() => <Gameboard
@@ -108,10 +119,13 @@ class Dashboard extends Component {
                             <Route
                                 path={'/profile'}
                             />
-                        </MuiThemeProvider>
+
+                            <Route
+                                path={'/funancial-advisor'}
+                                component={() => <FunancialAdvisor/>}
+                            />
     
-                        <center>         
-                            <MuiThemeProvider>
+                            <center>         
                                 <div id="onboarding-div">
                                     <Lottie options={stepOne}
                                         height={200}
@@ -121,31 +135,38 @@ class Dashboard extends Component {
         
                                     <div>
                                         What is your total income for the month? This includes your salary, any ad-hoc payments.<br/>
-                                        Essentially anything coming into your account.<br/>
-                                        R<TextField
-                                            hintText="Enter total monthly income"
-                                            floatingLabelText="Monthly income"
-                                            onChange={this.handleIncomeChange}
-                                            value={this.state.income}
-                                            />
+                                        Essentially anything coming into your account.
                                         <br/>
                                         <br/>
-                                        <RaisedButton label="Submit" onClick={() => this.updateStep("STEP_TWO")} primary={true} style={style}/>
+                                        <div class="field">
+                                            R<input
+                                                type="number"
+                                                placeholder="Monthly income"
+                                                value={this.state.income} 
+                                                onChange={this.handleIncomeChange}
+                                                />
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <Button variant="contained" color="primary" label="Submit" onClick={() => this.updateStep("STEP_TWO")} style={style}>
+                                            Next
+                                        </Button>
                                     </div>
                                 </div>
-                            </MuiThemeProvider>
-                        </center>   
+                            </center>   
+                        </MuiThemeProvider>
                     </div>
                 );
             } else if (this.state.step == "STEP_TWO") {
                 return (
                     <div>
-                        <MuiThemeProvider>
+                        <MuiThemeProvider theme={theme}>
                             <ul id="nav">
                                 <li id="nav-left"><Link to="/"><h3>back</h3></Link></li>
                                 <li id="nav-right"><Link to="/profile"><h3>Profile</h3></Link></li>
                                 <li id="nav-right"><Link to="/gameboard"><h3>Gameboard</h3></Link></li>
                                 <li id="nav-right"><Link to="/budget"><h3>Budget</h3></Link></li>
+                                <li id="nav-right"><Link to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
                             </ul>
                                 
                             <Route
@@ -163,10 +184,13 @@ class Dashboard extends Component {
                             <Route
                                 path={'/profile'}
                             />
-                        </MuiThemeProvider>
+                            
+                            <Route
+                                path={'/funancial-advisor'}
+                                component={() => <FunancialAdvisor/>}
+                            />
     
-                        <center>         
-                            <MuiThemeProvider>
+                            <center>         
                                 <div id="onboarding-div">
                                     <Lottie options={stepTwo}
                                         height={200}
@@ -179,30 +203,36 @@ class Dashboard extends Component {
                                     <div>                                    
                                         How much do you currently have in savings?
                                         <br/>
-                                        R<TextField
-                                            hintText="Total amount in savings"
-                                            floatingLabelText="Savings"
-                                            onChange={this.handleSavingsChange}
-                                            value={this.state.savings}
-                                            />
+                                        <br/>
+                                        <div class="field">
+                                            R<input
+                                                type="number"
+                                                placeholder="Savings"
+                                                value={this.state.savings} 
+                                                onChange={this.handleSavingsChange}
+                                                />
+                                        </div>
                                         <br/>
                                         <br/>    
-                                        <RaisedButton label="Submit" onClick={() => this.updateStep("STEP_THREE")} primary={true} style={style}/>
+                                        <Button variant="contained" color="primary"  label="Submit" onClick={() => this.updateStep("STEP_THREE")} style={style}>
+                                        Next
+                                        </Button>
                                     </div>
                                 </div>
-                            </MuiThemeProvider>
-                        </center>   
+                            </center>   
+                        </MuiThemeProvider>
                     </div>
                 );
             } else if (this.state.step == "STEP_THREE") {
                 return (
                     <div>
-                        <MuiThemeProvider>
+                        <MuiThemeProvider theme={theme}>
                             <ul id="nav">
                                 <li id="nav-left"><Link to="/"><h3>back</h3></Link></li>
                                 <li id="nav-right"><Link to="/profile"><h3>Profile</h3></Link></li>
                                 <li id="nav-right"><Link to="/gameboard"><h3>Gameboard</h3></Link></li>
                                 <li id="nav-right"><Link to="/budget"><h3>Budget</h3></Link></li>
+                                <li id="nav-right"><Link to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
                             </ul>
                                 
                             <Route
@@ -220,10 +250,13 @@ class Dashboard extends Component {
                             <Route
                                 path={'/profile'}
                             />
-                        </MuiThemeProvider>
+
+                            <Route
+                                path={'/funancial-advisor'}
+                                component={() => <FunancialAdvisor/>}
+                            />
     
-                        <center>         
-                            <MuiThemeProvider>
+                            <center>         
                                 <div id="onboarding-div">
                                     <Lottie options={stepThree}
                                         height={200}
@@ -236,19 +269,24 @@ class Dashboard extends Component {
                                     <div>
                                         What is the total value of all your investments?
                                         <br/>
-                                        R<TextField
-                                            hintText="Total value of investments"
-                                            floatingLabelText="Investments value"
-                                            onChange={this.handleInvestmentsChange}
-                                            value={this.state.investments}
-                                            />
+                                        <br/>
+                                        <div class="field">
+                                            R<input
+                                                type="number"
+                                                placeholder="Investments value"
+                                                value={this.state.investments} 
+                                                onChange={this.handleInvestmentsChange}
+                                                />
+                                        </div>
                                         <br/>
                                         <br/>
-                                        <RaisedButton label="Submit" onClick={() => this.setBasicInfo()} primary={true} style={style}/>
+                                        <Button variant="contained" color="primary" label="Submit" onClick={() => this.setBasicInfo()} style={style}>
+                                            Complete
+                                        </Button>
                                     </div>
                                 </div>
-                            </MuiThemeProvider>
-                        </center>   
+                            </center>   
+                        </MuiThemeProvider>
                     </div>
                 );
             }
@@ -262,6 +300,7 @@ class Dashboard extends Component {
                             <li id="nav-right"><Link to="/profile"><h3>Profile</h3></Link></li>
                             <li id="nav-right"><Link to="/gameboard"><h3>Gameboard</h3></Link></li>
                             <li id="nav-right"><Link to="/budget"><h3>Budget</h3></Link></li>
+                                <li id="nav-right"><Link to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
                         </ul>
                             
                         <Route
@@ -278,6 +317,11 @@ class Dashboard extends Component {
                         />
                         <Route
                             path={'/profile'}
+                        />
+                        
+                        <Route
+                            path={'/funancial-advisor'}
+                            component={() => <FunancialAdvisor/>}
                         />
                     </MuiThemeProvider>
 

@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import UserService from './services/user-service.js'
 import Dashboard from './dashboard-component.js';
-
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import Button from '@material-ui/core/Button';
   
 import Lottie from 'react-lottie'
 import * as animationData from './animations/scheme.json'
@@ -14,14 +10,14 @@ import * as loaderAnimation from './animations/loader-themed.json'
 import * as incorrectAnimation from './animations/incorrect.json'
 import * as coinsAnimation from './animations/coins.json'
 
+import { Lock, PermIdentity } from '@material-ui/icons';
 
 import {Helmet} from 'react-helmet';
 import './index.css';
 import Modal from 'react-modal';
 
-
-import { MuiThemeProvider, getMuiTheme } from 'material-ui/styles'
-import {teal500, cyan500} from 'material-ui/styles/colors';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; 
+import Button from '@material-ui/core/Button';
 
 class App extends React.Component {
     constructor(props) {
@@ -127,12 +123,16 @@ class App extends React.Component {
             }
           };
 
-        const theme = getMuiTheme({
+          const theme = createMuiTheme({
             palette: {
-              primary: teal500,
-              secondary: cyan500,
+              primary: {
+                  main: '#80cbc4'
+              },
+              secondary: {
+                main: '#004d40',
+              },
             },
-        });
+          });
           
           if (this.state.loggedIn === true) {
             console.log("logged in");
@@ -153,11 +153,13 @@ class App extends React.Component {
                                         width={400}
                                         isStopped={this.state.isStopped}
                                         isPaused={this.state.isPaused}/>
-                                    <MuiThemeProvider>
+                                    <MuiThemeProvider theme={theme}>
                                         We hope you learn alot.<br/>
                                         We have setup a sample budget item to get you started.<br/>
                                         You've also earned yourself a 100 coins for signing up.<br/><br/>
-                                        <RaisedButton label="continue" primary={true} style={style} onClick={() => this.exitOnBoarding()}/>
+                                        <Button variant="outlined" color="primary" label="continue" style={style} onClick={() => this.exitOnBoarding()}>
+                                            Let's get started!
+                                        </Button>
                                     </MuiThemeProvider>
                                 </center>
                             </div>
@@ -197,53 +199,68 @@ class App extends React.Component {
                         <h4>Join Funance now. The best way to learn how to manage your finances. </h4>
                         <h4>Keep engagement through being rewarded for checking off your payments</h4>
 
-                        <MuiThemeProvider>
-                            <div>
-                                <TextField
-                                    hintText="Enter your email"
-                                    floatingLabelText="Email"
-                                    value={this.state.value} onChange={this.handleEmailChange}
-                                    />
-                                <TextField
-                                    hintText="Enter your Username"
-                                    floatingLabelText="Username"
-                                    value={this.state.value} onChange={this.handleUserNameChange}
-                                    />
-                                <br/>
-                                <TextField
-                                    hintText="Enter your First name"
-                                    floatingLabelText="First name"
-                                    value={this.state.value} onChange={this.handleFirstNameChange}
-                                    />
-                                <TextField
-                                    hintText="Enter your Last name"
-                                    floatingLabelText="Last name"
-                                    value={this.state.value} onChange={this.handleLastNameChange}
-                                    />
-                                <br/>
-                                <TextField
-                                    type="password"
-                                    hintText="Enter your Password"
-                                    floatingLabelText="Password"
-                                    value={this.state.value} onChange={this.handlePasswordNameChange}
-                                    />
-                                <TextField
-                                    type="password"
-                                    hintText="Confirm your Password"
-                                    floatingLabelText="Confirm password"
-                                    value={this.state.value} onChange={this.handleConfirmPasswordNameChange}
-                                    />
-                                <br/>
-                                <br/>
+                        <MuiThemeProvider theme = { theme }>
+                            <div id="register-form">
 
+                                <div class="field">
+                                    <input
+                                        type="text"
+                                        placeholder="Email"
+                                        value={this.state.value} 
+                                        onChange={this.handleEmailChange}
+                                        />
+
+                                    <input
+                                        type="text"
+                                        placeholder="Username"
+                                        value={this.state.value} 
+                                        onChange={this.handleUserNameChange}
+                                        />
+                                </div>
+
+                                <div class="field">
+                                    <input
+                                        type="text"
+                                        placeholder="First name"
+                                        value={this.state.value} 
+                                        onChange={this.handleFirstNameChange}
+                                        />
+
+                                    <input
+                                        type="text"
+                                        placeholder="Last name"
+                                        value={this.state.value} 
+                                        onChange={this.handleLastNameChange}
+                                        />
+                                </div>
+                                
+                                <div class="field">
+                                    <input
+                                        type="password"
+                                        placeholder="Password"
+                                        value={this.state.value} 
+                                        onChange={this.handlePasswordNameChange}
+                                        />
+
+                                    <input
+                                        type="password"
+                                        placeholder="Confirm password"
+                                        value={this.state.value} 
+                                        onChange={this.handleConfirmPasswordNameChange}
+                                        />
+                                </div>
+
+
+                                <br/>
                                 <input type="checkbox" onChange={this.handleCheck} defaultChecked={this.state.checked}/>
                                 Have you read and accepted the <a href="second.html">Terms and conditions?</a>
                                 <br/>
                                 <br/>
                             </div>
                     
-                            <Button style={style} onClick={() => this.backFromRegister()}>Back</Button>
-                            <Button style={style} onClick={() => this.register()}>Register</Button>
+                            <Button variant="outlined" color="secondary" style={style} onClick={() => this.backFromRegister()}>Back</Button>
+                            <Button variant="contained" color="primary" style={style} onClick={() => this.register()}>Register</Button>
+                            
                         </MuiThemeProvider>
                     </div>
                     
@@ -301,23 +318,38 @@ class App extends React.Component {
                         <Helmet>
                             <style>{'body { background-color: #DFDFDF; }'}</style>
                         </Helmet>
-                        <MuiThemeProvider>
-                            <div>
+                        <MuiThemeProvider theme = {theme}>
+                            <div id="login-form">
                                 <div>
-                                <TextField
-                                    hintText="Enter your Username"
-                                    floatingLabelText="Username"
-                                    value={this.state.value} onChange={this.handleUserNameChange}
-                                    />
-                                <br/>
-                                <TextField
-                                    hintText="Enter your Password"
-                                    floatingLabelText="Password"
-                                    value={this.state.value} onChange={this.handlePasswordNameChange}
-                                    />
-                                <br/>
-                                <Button variant="outlined" color="inherit" primary={true} type="outline" style={style} onClick={() => this.login()}>Login</Button>
+                                    <form>                                        
+                                        <br/>
+
+                                        <div class="field">
+                                            <Lock id="mirrorInput"/>
+                                            <input
+                                                type="text"
+                                                placeholder="Enter you username here"
+                                                value={this.state.value} 
+                                                onChange={this.handleUserNameChange}
+                                                />
+                                        </div>
+
+                                        <div class="field">
+                                            <PermIdentity id="mirrorInput"/>
+                                            <input
+                                                type="password"
+                                                placeholder="Enter your password here"
+                                                value={this.state.value} 
+                                                onChange={this.handlePasswordNameChange}
+                                                />
+                                        </div>
+                                    </form>
+
+                                    <br/>
+
+                                    <Button variant="contained" color="primary" style={style} onClick={() => this.login()}>Login</Button>
                                 </div>
+
                                 <div onClick={() => this.navigateToRegister()}>
                                     <h5>No account? Click here to register.</h5>
                                 </div>
