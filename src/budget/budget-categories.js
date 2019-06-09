@@ -1,10 +1,8 @@
 import BudgetItem from './budget-item.js'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import ProfileService from '../services/profile-service.js';
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; 
 import Button from '@material-ui/core/Button';
 
 import Lottie from 'react-lottie'
@@ -110,58 +108,90 @@ class Category extends Component {
             }
           };
 
+        
+        const theme = createMuiTheme({
+            palette: {
+              primary: {
+                  main: '#80cbc4'
+              },
+              secondary: {
+                main: '#004d40',
+              },
+            },
+          });
+
         if (this.state.budgetList !== null) {
             return (
-                <div id="outer">
-                    <Button variant="outlined" onClick={this.openModal} primary={true} style={style}>Add another</Button>
-                    <div id="inner">
-                        {this.state.budgetList.map((uBudgetItem) => (
-                            <BudgetItem updateAmountPaid={this.updateAmountPaid.bind(this)} budgetItem={uBudgetItem}/>
-                        ))}
+                
+                <MuiThemeProvider theme = { theme }>
+                    <div id="outer">
+                        <Button variant="outlined" onClick={this.openModal} primary={true} style={style}>Add another</Button>
+                        <div id="inner">
+                            {this.state.budgetList.map((uBudgetItem) => (
+                                <BudgetItem updateAmountPaid={this.updateAmountPaid.bind(this)} budgetItem={uBudgetItem}/>
+                            ))}
+                        </div>
+                        
                     </div>
                     <Modal
-                        isOpen={this.state.modalIsOpen}
-                        onRequestClose={this.closeModal}
-                        style={customStyles}
-                        contentLabel="Example Modal">
-                        <MuiThemeProvider>
-                            <h3>Capture new item</h3>
-                            <div>
-                                <TextField
-                                    hintText="Enter the title of this item"
-                                    floatingLabelText="Title"
+                    isOpen={this.state.modalIsOpen}
+                    onRequestClose={this.closeModal}
+                    style={customStyles}
+                    contentLabel="Example Modal">
+                    <center>
+                        <h3>Add another item</h3>
+                        <div>
+
+                            <div class="field">
+                                <input
+                                    type="text"
+                                    placeholder="Title"
                                     value={this.state.value} onChange={this.handleTitleChange}
                                     />
-                                <br/>
-                                <TextField
-                                    hintText="Cost of the item"
-                                    floatingLabelText="Cost"
+                            </div>
+
+                            <div class="field">
+                                <input
+                                    type="number"
+                                    placeholder="Cost"
                                     value={this.state.value} onChange={this.handleCostChange}
                                     />
-                                <br/>
-                                <TextField
-                                    hintText="Once off?"
-                                    floatingLabelText="True of false"
+                            </div>
+                            
+                            <div class="field">
+                                <input
+                                    type="text"
+                                    placeholder="True of false"
                                     value={this.state.value} onChange={this.handleOnceOff}
                                     />
-                                <br/>
-                                <TextField
-                                    hintText="Date to be payed"
-                                    floatingLabelText="Choose date"
+                            </div>
+
+                            <div class="field">
+                                <input
+                                    type="data"
+                                    placeholder="Choose date"
                                     value={this.state.value} onChange={this.handlePaymentDate}
                                     />
-                                <br/>
-                                <TextField
-                                    hintText="Description"
-                                    floatingLabelText="Describe"
+                            </div>
+
+                            <div class="field">
+                                <input
+                                    type="text"
+                                    placeholder="Description"
                                     value={this.state.value} onChange={this.handleDescriptionChange}
                                     />
-                                <br/>
-                                <RaisedButton label="Submit" onClick={() => this.createBudgetItem()} primary={true} style={style}/>
                             </div>
-                        </MuiThemeProvider>
+
+                            <br/>
+                            <input type="checkbox" defaultChecked={this.state.checked}/>
+                            Is this a recurring item?
+                            <br/>
+                            <br/>
+                        </div>
+                        <Button variant="outlined" color="secondary" style={style} onClick={() => this.createBudgetItem()}>Add item</Button>
+                        </center>
                     </Modal>
-                </div>
+                </MuiThemeProvider>
             );
         } else {
 
@@ -188,10 +218,10 @@ class Category extends Component {
             }
 
             return (
+                
+                <MuiThemeProvider theme = { theme }>
                     <div id="outer">
-                        <MuiThemeProvider>
                         <Button variant="outlined" label="Add new" primary={true} type="outline" style={style} onClick={this.openModal}>Add new</Button>
-                        </MuiThemeProvider>
                         <div class="category-empty-description">
                             <center>
                                 <span id="parent-element">
@@ -204,48 +234,71 @@ class Category extends Component {
                                 </span>
                             </center>
                         </div>
-                        <Modal
-                            isOpen={this.state.modalIsOpen}
-                            onRequestClose={this.closeModal}
-                            style={customStyles}
-                            contentLabel="Example Modal">
-                            <MuiThemeProvider>
-                                <div>
-                                    <TextField
-                                        hintText="Enter the title of this item"
-                                        floatingLabelText="Title"
-                                        value={this.state.value} onChange={this.handleTitleChange}
-                                        />
-                                    <br/>
-                                    <TextField
-                                        hintText="Cost of the item"
-                                        floatingLabelText="Cost"
-                                        value={this.state.value} onChange={this.handleCostChange}
-                                        />
-                                    <br/>
-                                    <TextField
-                                        hintText="Once off?"
-                                        floatingLabelText="True of false"
-                                        value={this.state.value} onChange={this.handleOnceOff}
-                                        />
-                                    <br/>
-                                    <TextField
-                                        hintText="Date to be payed"
-                                        floatingLabelText="Choose date"
-                                        value={this.state.value} onChange={this.handlePaymentDate}
-                                        />
-                                    <br/>
-                                    <TextField
-                                        hintText="Description"
-                                        floatingLabelText="Describe"
-                                        value={this.state.value} onChange={this.handleDescriptionChange}
-                                        />
-                                    <br/>
-                                    <RaisedButton label="Submit" onClick={() => this.createBudgetItem()} primary={true} style={style}/>
-                                </div>
-                            </MuiThemeProvider>
-                        </Modal>
-                    </div>);
+                    </div>
+
+                     <Modal
+                     isOpen={this.state.modalIsOpen}
+                     onRequestClose={this.closeModal}
+                     style={customStyles}
+                     contentLabel="Example Modal">
+                    
+                    <center>
+                        <h3>Add new item</h3>
+                        <div>
+
+                            <div class="field">
+                                <input
+                                    type="text"
+                                    placeholder="Title"
+                                    value={this.state.value} onChange={this.handleTitleChange}
+                                    />
+                            </div>
+
+                            <div class="field">
+                                <input
+                                    type="number"
+                                    placeholder="Cost"
+                                    value={this.state.value} onChange={this.handleCostChange}
+                                    />
+                            </div>
+                            
+                            <div class="field">
+                                <input
+                                    type="text"
+                                    placeholder="True of false"
+                                    value={this.state.value} onChange={this.handleOnceOff}
+                                    />
+                            </div>
+
+                            <div class="field">
+                                <input
+                                    type="data"
+                                    placeholder="Choose date"
+                                    value={this.state.value} onChange={this.handlePaymentDate}
+                                    />
+                            </div>
+
+                            <div class="field">
+                                <input
+                                    type="text"
+                                    placeholder="Description"
+                                    value={this.state.value} onChange={this.handleDescriptionChange}
+                                    />
+                            </div>
+
+                            <br/>
+                            <input type="checkbox" defaultChecked={this.state.checked}/>
+                            Is this a recurring item?
+                            <br/>
+                            <br/>
+                        </div>
+                
+                        <Button variant="outlined" color="secondary" style={style} onClick={() => this.createBudgetItem()}>Add item</Button>
+                        </center>
+                        
+                    </Modal>
+                </MuiThemeProvider>
+            );
         }
     }
 }
@@ -258,7 +311,8 @@ const customStyles = {
         bottom                : 'auto',
         marginRight           : '-50%',
         transform             : 'translate(-50%, -50%)',
-        background            : '#f7f6f2'  
+        background            : '#f7f6f2' ,
+        width                 : '30%'
     }
 };
 
