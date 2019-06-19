@@ -358,7 +358,6 @@ class Dashboard extends Component {
     setBasicInfo() {
         this.profileService.updateIncome(this.state.username, this.state.income, this.state.savings, this.state.investments).then(
             (data) => {
-            console.log("finished with: " + data);
         });
         this.setState({newUser:false});
         this.setState({showBudgetOnboarding:true})

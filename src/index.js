@@ -265,7 +265,6 @@ class App extends React.Component {
           }
           
           else if (this.state.loggedIn === true) {
-            console.log("logged in");
                 return (
                     <BrowserRouter>
                         <Modal
@@ -531,7 +530,6 @@ class App extends React.Component {
         this.setState({isLoading:true})
         this.userService.login(this.state.username, this.state.password).then(
             (data) => {
-                console.log(data);
                 if (data === undefined || data == null) {
                     this.setState({isIncorrectInfo:true})
                     this.setState({errorMessage:"There was an error trying to login. Please try again or contact *** for assistance."})
@@ -561,7 +559,6 @@ class App extends React.Component {
                         this.setState({isIncorrectInfo:true})
                         this.setState({errorMessage:"There was an error trying to register. Please try again or contact *** for assistance."})
                     } else if (data.status === "ALREADY_EXISTS") {
-                        console.log(data.status);
                         this.setState({isIncorrectInfo:true})
                         this.setState({errorMessage:"The chosen username is already taken. Please choose another."})
                     } else if (data.status === "CREATED") {

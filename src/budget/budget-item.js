@@ -89,7 +89,6 @@ class BudgetItem extends Component {
     markAsDone() {
       this.profileService.markItemAsPayed(this.state.budgetItem.itemId).then(
         (data) => {
-          console.log("Item marked as payed");
           this.setState({itemState:"PAYED"});
           this.props.updateAmountPaid(this.state.budgetItem.amount);
       });
