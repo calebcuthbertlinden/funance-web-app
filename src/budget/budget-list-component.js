@@ -63,24 +63,6 @@ class Budget extends Component {
 
   render() {
 
-    // const Button = withRouter(({ history }) => (
-    //   <button
-    //     type='button'
-    //     onClick={() => { history.push('/') }}
-    //   >
-    //     Click Me!
-    //   </button>
-    // ))
-
-    const loadingOptions = {
-      loop: true,
-      autoplay: true, 
-      animationData: loaderAnimation.default,
-      rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
-      }
-    };
-
     const theme = createMuiTheme({
       palette: {
         primary: {
@@ -91,6 +73,15 @@ class Budget extends Component {
         },
       },
     });
+
+    const loadingOptions = {
+      loop: true,
+      autoplay: true, 
+      animationData: loaderAnimation.default,
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice'
+      }
+    };
     
     const coinsOption = {
       loop: true,
@@ -142,6 +133,23 @@ class Budget extends Component {
                   </center>
               </div>
           </Modal>
+
+          {/* Loader modal */}
+          <Modal
+              isOpen={this.state.isLoading}
+              onRequestClose={this.closeModal}
+              style={customStyles}
+              contentLabel="Example Modal">
+              <div>
+                  <center><Lottie options={loadingOptions}
+                      height={100}
+                      width={100}
+                      isStopped={this.state.isStopped}
+                      isPaused={this.state.isPaused}/>
+                  </center>
+              </div>
+          </Modal>
+
         <Helmet>
             <style>{'body { background-color: #DFDFDF; }'}</style>
         </Helmet>
