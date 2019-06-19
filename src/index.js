@@ -456,7 +456,7 @@ class App extends React.Component {
                                         <br/>
 
                                         <div class="field">
-                                            <Lock id="mirrorInput"/>
+                                            <PermIdentity id="mirrorInput"/>
                                             <input
                                                 type="text"
                                                 placeholder="Enter you username here"
@@ -466,7 +466,7 @@ class App extends React.Component {
                                         </div>
 
                                         <div class="field">
-                                            <PermIdentity id="mirrorInput"/>
+                                            <Lock id="mirrorInput"/>
                                             <input
                                                 type="password"
                                                 placeholder="Enter your password here"
