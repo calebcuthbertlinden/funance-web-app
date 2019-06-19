@@ -5,7 +5,6 @@ class UserService {
   }
   
   async login(username, password) {
-    console.log("UserService.login():");
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -17,15 +16,12 @@ class UserService {
     }
 
     const request = new Request(this.config.MSRV_BASE_URL + "user/authenticate", options);
-    console.log(options.body);
 
     return fetch(request)
       .then(response => {
         if (!response.ok) {
-            console.log(response);
             this.handleResponseError(response);
         }
-        console.log(response);
         return response.json();
       })
       .catch(error => {
@@ -34,8 +30,6 @@ class UserService {
   }
 
   async register(username, password, name, surname, email) {
-    console.log("UserService.login():");
-
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
@@ -51,15 +45,11 @@ class UserService {
     }
 
     const request = new Request(this.config.MSRV_BASE_URL + "user", options);
-    console.log(options.body);
-
     return fetch(request)
       .then(response => {
         if (!response.ok) {
-            console.log(response);
             this.handleResponseError(response);
         }
-        console.log(response);
         return response.json();
       })
       .catch(error => {
@@ -73,7 +63,6 @@ class UserService {
     }
   }
   handleError(error) {
-      console.log(error.message);
   }
 }
 export default UserService;

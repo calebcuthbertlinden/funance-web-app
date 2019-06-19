@@ -77,7 +77,6 @@ class Login extends Component {
     login() {
         this.userService.login(this.state.username, this.state.password).then(
             (data) => {
-                console.log(data);
                 this.navigateToBudget(data.status);
           });
     }

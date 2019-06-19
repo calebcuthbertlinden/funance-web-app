@@ -32,7 +32,6 @@ class Gameboard extends Component {
       getGameboard() {
         this.profileService.getGameboard(this.state.username).then(
           (data) => {
-            console.log(data);
             this.setState({coins:data.coin})
         });
       }

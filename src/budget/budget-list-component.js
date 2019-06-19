@@ -50,7 +50,6 @@ class Budget extends Component {
 
   setupBudgetState() {
     if (this.state.budgetCategories === undefined || this.state.budgetCategories == null) {
-      console.log("error");
     } else {
       // TODO fix this
     }

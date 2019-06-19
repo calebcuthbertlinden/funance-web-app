@@ -7,13 +7,11 @@ class ProfileService {
   
   // Retrieve the whole budget
   async getBudget(username) {
-    console.log(this.config.MSRV_BASE_URL + "profile/budget?username=" + username);
       return fetch(this.config.MSRV_BASE_URL + "profile/budget?username=" + username)
       .then(response => {
         if (!response.ok) {
             this.handleResponseError(response);
         }
-        console.log(response);
         return response.json();
       })
       .catch(error => {
@@ -40,15 +38,12 @@ class ProfileService {
     }
   
     const request = new Request(this.config.MSRV_BASE_URL + "profile/budget/item", options);
-    console.log(options.body);
 
     return fetch(request)
       .then(response => {
         if (!response.ok) {
-            console.log(response);
             this.handleResponseError(response);
         }
-        console.log(response);
         return response.json();
       })
       .catch(error => {
@@ -67,15 +62,12 @@ class ProfileService {
     }
   
     const request = new Request(this.config.MSRV_BASE_URL + "profile/budget/item/capture?itemId=" + itemId + "&state=PAYED", options);
-    console.log(options.body);
 
     return fetch(request)
       .then(response => {
         if (!response.ok) {
-            console.log(response);
             this.handleResponseError(response);
         }
-        console.log(response);
         return response.json();
       })
       .catch(error => {
@@ -85,13 +77,11 @@ class ProfileService {
 
   // Retrieve the dashboard
   async getDashboard(username) {
-    console.log(this.config.MSRV_BASE_URL + "profile/dashboard?username=" + username);
       return fetch(this.config.MSRV_BASE_URL + "profile/dashboard?username=" + username)
       .then(response => {
         if (!response.ok) {
             this.handleResponseError(response);
         }
-        console.log(response);
         return response.json();
       })
       .catch(error => {
@@ -101,13 +91,11 @@ class ProfileService {
 
   // Retrieve the gameboard
   async getGameboard(username) {
-    console.log(this.config.MSRV_BASE_URL + "profile/gameboard?username=" + username);
       return fetch(this.config.MSRV_BASE_URL + "profile/gameboard?username=" + username)
       .then(response => {
         if (!response.ok) {
             this.handleResponseError(response);
         }
-        console.log(response);
         return response.json();
       })
       .catch(error => {
@@ -131,15 +119,12 @@ class ProfileService {
     }
   
     const request = new Request(this.config.MSRV_BASE_URL + "profile/budget", options);
-    console.log(options.body);
 
     return fetch(request)
       .then(response => {
         if (!response.ok) {
-            console.log(response);
             this.handleResponseError(response);
         }
-        console.log(response);
         return response.json();
       })
       .catch(error => {
@@ -154,7 +139,6 @@ class ProfileService {
     }
   }
   handleError(error) {
-      console.log(error.message);
   }
 }
 export default ProfileService;
