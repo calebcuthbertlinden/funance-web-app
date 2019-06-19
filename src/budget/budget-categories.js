@@ -6,6 +6,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import * as loaderAnimation from '../animations/loader-themed.json'
 
 import Lottie from 'react-lottie'
 import * as animationDebit from '../animations/attachement.json'
@@ -103,7 +104,8 @@ class Category extends Component {
 
                 this.props.updateAmountToPay(this.state.newItemCost);
                 this.setState({modalIsOpen:false});
-                this.props.view();
+                this.props.view();  
+                this.setState({isLoading:false});
            
         });
         this.setState({newItemOnceOff:false})
@@ -118,6 +120,15 @@ class Category extends Component {
               preserveAspectRatio: 'xMidYMid slice'
             }
           };
+
+        const loadingOptions = {
+            loop: true,
+            autoplay: true, 
+            animationData: loaderAnimation.default,
+            rendererSettings: {
+                preserveAspectRatio: 'xMidYMid slice'
+            }
+        };
 
         
         const theme = createMuiTheme({
@@ -192,6 +203,22 @@ class Category extends Component {
                         </div>
                         <Button variant="outlined" color="secondary" style={style} onClick={() => this.createBudgetItem()}>Add item</Button>
                         </center>
+                    </Modal>
+
+                     {/* Loader modal */}
+                    <Modal
+                        isOpen={this.state.isLoading}
+                        onRequestClose={this.closeModal}
+                        style={customStyles}
+                        contentLabel="Example Modal">
+                        <div>
+                            <center><Lottie options={loadingOptions}
+                                height={100}
+                                width={100}
+                                isStopped={this.state.isStopped}
+                                isPaused={this.state.isPaused}/>
+                            </center>
+                        </div>
                     </Modal>
                 </MuiThemeProvider>
             );
