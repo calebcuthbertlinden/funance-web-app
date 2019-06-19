@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; 
 import Button from '@material-ui/core/Button';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import Lottie from 'react-lottie'
 import * as animationDebit from '../animations/attachement.json'
@@ -25,6 +27,7 @@ class Category extends Component {
             newItemTitle:"",
             newItemCost:0,
             newItemDate:"",
+            startDate: new Date(),
             newItemOnceOff:false,
             newItemDescription:false
         };
@@ -37,6 +40,7 @@ class Category extends Component {
         this.handlePaymentDate = this.handlePaymentDate.bind(this);
         this.handleOnceOff = this.handleOnceOff.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     openModal() {
@@ -60,7 +64,7 @@ class Category extends Component {
     }
     
     handleOnceOff(event) {
-        this.setState({newItemOnceOff: true});
+        this.setState({newItemOnceOff: !this.state.newItemOnceOff});
     }
 
     handleDescriptionChange(event) {
@@ -71,15 +75,21 @@ class Category extends Component {
         this.props.updateAmountPaid(amount);
     }
 
+    handleChange(date) {
+        this.setState({
+          startDate: date
+        });
+      }
+
     createBudgetItem() {
         this.setState({isLoading:true});
-        console.log(this.state.budgetList);
+        var dateString = this.state.startDate.toDateString()
         this.profileService.createBudgetItem(this.state.username, 
             this.state.newItemTitle, 
             this.state.newItemOnceOff, 
             this.state.category,
             this.state.newItemCost,
-            this.state.newItemDate,
+            dateString,
             this.state.newItemDescription).then(
             (data) => {
                 if (this.state.budgetList == null) {
@@ -96,6 +106,7 @@ class Category extends Component {
                 this.props.view();
            
         });
+        this.setState({newItemOnceOff:false})
     }
     
     render() {
@@ -157,21 +168,12 @@ class Category extends Component {
                                     value={this.state.value} onChange={this.handleCostChange}
                                     />
                             </div>
-                            
-                            <div class="field">
-                                <input
-                                    type="text"
-                                    placeholder="True of false"
-                                    value={this.state.value} onChange={this.handleOnceOff}
-                                    />
-                            </div>
 
                             <div class="field">
-                                <input
-                                    type="data"
-                                    placeholder="Choose date"
-                                    value={this.state.value} onChange={this.handlePaymentDate}
-                                    />
+                                <DatePicker
+                                    selected={this.state.startDate}
+                                    onChange={this.handleChange}
+                                        />
                             </div>
 
                             <div class="field">
@@ -183,7 +185,7 @@ class Category extends Component {
                             </div>
 
                             <br/>
-                            <input type="checkbox" defaultChecked={this.state.checked}/>
+                            <input type="checkbox" defaultChecked={this.state.checked} onChange={this.handleOnceOff}/>
                             Is this a recurring item?
                             <br/>
                             <br/>
@@ -261,21 +263,12 @@ class Category extends Component {
                                     value={this.state.value} onChange={this.handleCostChange}
                                     />
                             </div>
-                            
-                            <div class="field">
-                                <input
-                                    type="text"
-                                    placeholder="True of false"
-                                    value={this.state.value} onChange={this.handleOnceOff}
-                                    />
-                            </div>
 
                             <div class="field">
-                                <input
-                                    type="data"
-                                    placeholder="Choose date"
-                                    value={this.state.value} onChange={this.handlePaymentDate}
-                                    />
+                                <DatePicker                         
+                                    selected={this.state.startDate}
+                                    onChange={this.handleChange}
+                                        />
                             </div>
 
                             <div class="field">
@@ -287,7 +280,7 @@ class Category extends Component {
                             </div>
 
                             <br/>
-                            <input type="checkbox" defaultChecked={this.state.checked}/>
+                            <input type="checkbox" defaultChecked={this.state.checked} onChange={this.handleOnceOff}/>
                             Is this a recurring item?
                             <br/>
                             <br/>

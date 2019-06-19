@@ -6,6 +6,12 @@ import { MuiThemeProvider, getMuiTheme } from 'material-ui/styles'
 import {teal} from 'material-ui/styles/colors';
 import Button from '@material-ui/core/Button';
 
+import { Replay} from '@material-ui/icons';
+
+import Lottie from 'react-lottie'
+import * as loaderAnimation from '../animations/loader-themed.json'
+import * as coinsAnimation from '../animations/moneystack.json'
+
 class BudgetItem extends Component {
     constructor(props) {
       super(props);
@@ -17,7 +23,16 @@ class BudgetItem extends Component {
     }
   
     render() {
-      if (this.state.itemState === "OPEN") {
+      const coinsOption = {
+      loop: false,
+      autoplay: true, 
+      animationData: coinsAnimation.default,
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice'
+      }
+    };
+
+    if (this.state.itemState === "OPEN") {
         return (
           <MuiThemeProvider theme={getMuiTheme({
             palette: {
@@ -50,7 +65,11 @@ class BudgetItem extends Component {
               <div class="flip-card-inner">
                 <div class="flip-card-front-disabled">
                     <h3 class="card-title">{this.state.budgetItem.title}</h3>
-                    <p class="card-title">{this.state.itemState}</p>
+                    <Lottie options={coinsOption}
+                          height={50}
+                          width={50}
+                          isStopped={this.state.isStopped}
+                          isPaused={this.state.isPaused}/>
                 </div>  
                 <div class="flip-card-back"> 
                     <h2 class="card-title">{this.state.budgetItem.amount}</h2>

@@ -49,10 +49,9 @@ class FunancialAdvisor extends Component {
                         width={200}
                         isStopped={this.state.isStopped}
                         isPaused={this.state.isPaused}/>
-
                     <br/>
-                    <br/>  
-                    <div>                         
+                    <div>         
+                        <h2>Your Funancial advisor</h2>                
                         <h3>Send a whatsapp to +1 415 523 8886 with code join moment-chain</h3>
                         <h5>Your funancial advisor is there to answer your every need.</h5>
                         <h5>Just send it a whatsapp and it'll help you out!</h5>

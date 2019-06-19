@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, withRouter, Switch, Route } from 'react-router-dom';
 import UserService from './services/user-service.js'
 import Dashboard from './dashboard-component.js';
   
@@ -38,7 +38,9 @@ class App extends React.Component {
             showOnboarding:false,
             isLoading:false,
             errorMessage:"You have entered incorrect information.",
-            newUser:false
+            newUser:false,
+            canRegister:false,
+            passwordsMatching:true
         }
         this.userService = new UserService();
         this.handleUserNameChange = this.handleUserNameChange.bind(this);
@@ -57,12 +59,10 @@ class App extends React.Component {
 
     handlePasswordNameChange(event) {
         this.setState({password: event.target.value});
-        this.validatePassword();
     }
 
     handleConfirmPasswordNameChange(event) {
         this.setState({confirmPassword: event.target.value});
-        this.validatePassword();
     }
 
     handleFirstNameChange(event) {
@@ -79,12 +79,50 @@ class App extends React.Component {
 
     handleCheck() {
         this.setState({checked: !this.state.checked});
+        this.setState({canRegister: !this.state.checked});
     }
     
     closeModal() {
         this.setState({isIncorrectInfo: false});
     }
     
+    handleValidation(){
+        let fields = this.state.fields;
+        let errors = {};
+        let formIsValid = true;
+
+        //Name
+        if(!fields["name"]){
+           formIsValid = false;
+           errors["name"] = "Cannot be empty";
+        }
+
+        if(typeof fields["name"] !== "undefined"){
+           if(!fields["name"].match(/^[a-zA-Z]+$/)){
+              formIsValid = false;
+              errors["name"] = "Only letters";
+           }        
+        }
+
+        //Email
+        if(!fields["email"]){
+           formIsValid = false;
+           errors["email"] = "Cannot be empty";
+        }
+
+        if(typeof fields["email"] !== "undefined"){
+           let lastAtPos = fields["email"].lastIndexOf('@');
+           let lastDotPos = fields["email"].lastIndexOf('.');
+
+           if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields["email"].indexOf('@@') == -1 && lastDotPos > 2 && (fields["email"].length - lastDotPos) > 2)) {
+              formIsValid = false;
+              errors["email"] = "Email is not valid";
+            }
+       }  
+
+       this.setState({errors: errors});
+       return formIsValid;
+   }
 
     render() {
         const defaultOptions = {
@@ -133,8 +171,100 @@ class App extends React.Component {
               },
             },
           });
+
+          if (this.state.username == null || this.state.username == undefined) {
+              this.setState({loggedIn:false})
+              return (
+                <div>
+                    <center>
+                        <Lottie options={defaultOptions}
+                                            height={200}
+                                            width={400}
+                                            isStopped={this.state.isStopped}
+                                            isPaused={this.state.isPaused}/>
+    
+                        <h2>Funance</h2>
+
+                        <Helmet>
+                            <style>{'body { background-color: #DFDFDF; }'}</style>
+                        </Helmet>
+                        <MuiThemeProvider theme = {theme}>
+                            <div id="login-form">
+                                <div>
+                                    <form>                                        
+                                        <br/>
+
+                                        <div class="field">
+                                            <Lock id="mirrorInput"/>
+                                            <input
+                                                type="text"
+                                                placeholder="Enter you username here"
+                                                value={this.state.value} 
+                                                onChange={this.handleUserNameChange}
+                                                />
+                                        </div>
+
+                                        <div class="field">
+                                            <PermIdentity id="mirrorInput"/>
+                                            <input
+                                                type="password"
+                                                placeholder="Enter your password here"
+                                                value={this.state.value} 
+                                                onChange={this.handlePasswordNameChange}
+                                                />
+                                        </div>
+                                    </form>
+
+                                    <br/>
+
+                                    <Button variant="contained" color="primary" style={style} onClick={() => this.login()}>Login</Button>
+                                </div>
+
+                                <div style={{cursor:'pointer'}} onClick={() => this.navigateToRegister()}>
+                                    <h5>No account? Click here to register.</h5>
+                                </div>
+                            
+                            </div>
+                        </MuiThemeProvider>
+                            
+                        {/* Loader modal */}
+                        <Modal
+                            isOpen={this.state.isLoading}
+                            onRequestClose={this.closeModal}
+                            style={customStyles}
+                            contentLabel="Example Modal">
+                            <div>
+                                <center><Lottie options={loadingOptions}
+                                    height={100}
+                                    width={100}
+                                    isStopped={this.state.isStopped}
+                                    isPaused={this.state.isPaused}/>
+                                </center>
+                            </div>
+                        </Modal>
+
+                        {/* Incorrect info modal */}
+                        <Modal
+                            isOpen={this.state.isIncorrectInfo}
+                            onRequestClose={this.closeModal}
+                            style={customStyles}
+                            contentLabel="Example Modal">
+                            <div>
+                                <center><Lottie options={incorrect}
+                                    height={100}
+                                    width={100}
+                                    isStopped={this.state.isStopped}
+                                    isPaused={this.state.isPaused}/>
+                                </center>
+                                <h4>{this.state.errorMessage}</h4>
+                            </div>
+                        </Modal>
+                    </center>
+                </div> 
+            );
+          }
           
-          if (this.state.loggedIn === true) {
+          else if (this.state.loggedIn === true) {
             console.log("logged in");
                 return (
                     <BrowserRouter>
@@ -250,8 +380,10 @@ class App extends React.Component {
                                         />
                                 </div>
 
-
                                 <br/>
+                                <br/>
+                                { !this.state.passwordsMatching ? <div>The passwords do not match</div> : null }
+                                
                                 <input type="checkbox" onChange={this.handleCheck} defaultChecked={this.state.checked}/>
                                 Have you read and accepted the <a href="second.html">Terms and conditions?</a>
                                 <br/>
@@ -259,7 +391,7 @@ class App extends React.Component {
                             </div>
                     
                             <Button variant="outlined" color="secondary" style={style} onClick={() => this.backFromRegister()}>Back</Button>
-                            <Button variant="contained" color="primary" style={style} onClick={() => this.register()}>Register</Button>
+                            <Button variant="contained" disabled={!this.state.canRegister} color="primary" style={style} onClick={() => this.register()}>Register</Button>
                             
                         </MuiThemeProvider>
                     </div>
@@ -350,7 +482,7 @@ class App extends React.Component {
                                     <Button variant="contained" color="primary" style={style} onClick={() => this.login()}>Login</Button>
                                 </div>
 
-                                <div onClick={() => this.navigateToRegister()}>
+                                <div style={{cursor:'pointer'}} onClick={() => this.navigateToRegister()}>
                                     <h5>No account? Click here to register.</h5>
                                 </div>
                             
@@ -420,28 +552,34 @@ class App extends React.Component {
     }
 
     register() {
-        this.setState({isLoading:true})
-        this.userService.register(this.state.username, this.state.password, this.state.firstname, this.state.lastname, "email@email.com").then(
-            (data) => {
-                console.log(data.status);
-                if (data === undefined || data == null) {
-                    this.setState({isIncorrectInfo:true})
-                    this.setState({errorMessage:"There was an error trying to register. Please try again or contact *** for assistance."})
-                } else if (data.status === "ALREADY_EXISTS") {
-                    console.log(data.status);
-                    this.setState({isIncorrectInfo:true})
-                    this.setState({errorMessage:"The chosen username is already taken. Please choose another."})
-                } else if (data.status === "CREATED") {
-                    this.setState({loggedIn:true});
-                    this.setState({showOnboarding:true});
-                }
-                this.setState({isLoading:false})
-          });
+        this.validatePassword();
+        if (this.state.canRegister) {
+            this.setState({isLoading:true})
+            this.userService.register(this.state.username, this.state.password, this.state.firstname, this.state.lastname, "email@email.com").then(
+                (data) => {
+                    if (data === undefined || data == null) {
+                        this.setState({isIncorrectInfo:true})
+                        this.setState({errorMessage:"There was an error trying to register. Please try again or contact *** for assistance."})
+                    } else if (data.status === "ALREADY_EXISTS") {
+                        console.log(data.status);
+                        this.setState({isIncorrectInfo:true})
+                        this.setState({errorMessage:"The chosen username is already taken. Please choose another."})
+                    } else if (data.status === "CREATED") {
+                        this.setState({loggedIn:true});
+                        this.setState({showOnboarding:true});
+                    } 
+                    this.setState({isLoading:false})
+              });
+        } else {      
+            this.setState({passwordsMatching:false})
+        } 
     }
 
     validatePassword() {
         if (this.state.password != this.state.confirmPassword) {
-            this.setState({canRegister:false})
+            this.setState({passwordsMatching:false})
+        } else {
+            this.setState({passwordsMatching:true})
         }
     }
 

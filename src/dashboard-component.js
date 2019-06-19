@@ -21,6 +21,7 @@ class Dashboard extends Component {
         this.state = {
             username: this.props.username,
             newUser: this.props.newUser,
+            showBudgetOnboarding: false,
             step: "STEP_ONE",
             income:0,
             savings:0,
@@ -42,6 +43,10 @@ class Dashboard extends Component {
 
     handleInvestmentsChange(event) {
         this.setState({investments: event.target.value});
+    }
+
+    updateOnboardingSeen() {
+        this.setState({showBudgetOnboarding:false});
     }
 
     componentDidMount() {
@@ -94,15 +99,13 @@ class Dashboard extends Component {
                 return (
                     <div>
                         <MuiThemeProvider theme={theme}>
-                            <div id="nav">
-                                <ul>
-                                    <li id="nav-left"><Link to="/"><h3>back</h3></Link></li>
-                                    <li id="nav-right"><Link to="/profile"><h3>Profile</h3></Link></li>
-                                    <li id="nav-right"><Link to="/gameboard"><h3>Gameboard</h3></Link></li>
-                                    <li id="nav-right"><Link to="/budget"><h3>Budget</h3></Link></li>
-                                    <li id="nav-right"><Link to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
-                                </ul>
-                            </div>
+                            <ul id="nav">
+                                <li id="nav-left"><Link to="/"><h3>back</h3></Link></li>
+                                <li id="nav-right"><Link to="/profile"><h3>Profile</h3></Link></li>
+                                <li id="nav-right"><Link to="/gameboard"><h3>Gameboard</h3></Link></li>
+                                <li id="nav-right"><Link to="/budget"><h3>Budget</h3></Link></li>
+                                <li id="nav-right"><Link to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
+                            </ul>
                            
                             <Route
                                 path={'/gameboard'}
@@ -114,6 +117,8 @@ class Dashboard extends Component {
                                 path={'/budget'}
                                 component={() => <Budget
                                     username={this.state.username}
+                                    newUser={this.state.showBudgetOnboarding}
+                                    updateOnboardingSeen={this.updateOnboardingSeen.bind(this)} 
                                 />}
                             />
                             <Route
@@ -179,6 +184,8 @@ class Dashboard extends Component {
                                 path={'/budget'}
                                 component={() => <Budget
                                     username={this.state.username}
+                                    newUser={this.state.showBudgetOnboarding}
+                                    updateOnboardingSeen={this.updateOnboardingSeen.bind(this)} 
                                 />}
                             />
                             <Route
@@ -245,6 +252,8 @@ class Dashboard extends Component {
                                 path={'/budget'}
                                 component={() => <Budget
                                     username={this.state.username}
+                                    newUser={this.state.showBudgetOnboarding}
+                                    updateOnboardingSeen={this.updateOnboardingSeen.bind(this)} 
                                 />}
                             />
                             <Route
@@ -300,7 +309,7 @@ class Dashboard extends Component {
                             <li id="nav-right"><Link to="/profile"><h3>Profile</h3></Link></li>
                             <li id="nav-right"><Link to="/gameboard"><h3>Gameboard</h3></Link></li>
                             <li id="nav-right"><Link to="/budget"><h3>Budget</h3></Link></li>
-                                <li id="nav-right"><Link to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
+                            <li id="nav-right"><Link to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
                         </ul>
                             
                         <Route
@@ -313,6 +322,8 @@ class Dashboard extends Component {
                             path={'/budget'}
                             component={() => <Budget
                                 username={this.state.username} income={this.state.income}
+                                showBudgetOnboarding={this.state.showBudgetOnboarding}
+                                updateOnboardingSeen={this.updateOnboardingSeen.bind(this)} 
                             />}
                         />
                         <Route
@@ -349,7 +360,8 @@ class Dashboard extends Component {
             (data) => {
             console.log("finished with: " + data);
         });
-        this.setState({newUser:false})
+        this.setState({newUser:false});
+        this.setState({showBudgetOnboarding:true})
     }
 }
 

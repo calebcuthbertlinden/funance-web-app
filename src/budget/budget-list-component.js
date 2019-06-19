@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import ProfileService from '../services/profile-service.js';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Category from './budget-categories';
 import {Helmet} from 'react-helmet';
 import Lottie from 'react-lottie'
 import * as loaderAnimation from '../animations/loader-themed.json'
+import * as coinsAnimation from '../animations/coins.json'
 import Modal from 'react-modal';
 import { AccountBalanceWallet, AccountBalance, CheckCircle, CalendarToday } from '@material-ui/icons';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; 
+import Button from '@material-ui/core/Button';
+import { Switch, BrowserRouter, Route, Link, withRouter } from 'react-router-dom';
+
 class Budget extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +23,8 @@ class Budget extends Component {
       moneyRemaining: this.props.income,
       timeRemaining: "days left this month",
       isLoading:false,
-      outstandingPayments: 0
+      outstandingPayments: 0,
+      showBudgetOnboarding:this.props.showBudgetOnboarding
     };
     var updateAmountPaid = this.updateAmountPaid.bind(this);
   }
@@ -51,7 +56,21 @@ class Budget extends Component {
     }
   }
 
+  exitOnBoarding() {
+      this.setState({showBudgetOnboarding:false})
+      this.props.updateOnboardingSeen();
+  }
+
   render() {
+
+    // const Button = withRouter(({ history }) => (
+    //   <button
+    //     type='button'
+    //     onClick={() => { history.push('/') }}
+    //   >
+    //     Click Me!
+    //   </button>
+    // ))
 
     const loadingOptions = {
       loop: true,
@@ -62,7 +81,26 @@ class Budget extends Component {
       }
     };
 
-    console.log(this.state.budgetCategories)
+    const theme = createMuiTheme({
+      palette: {
+        primary: {
+            main: '#80cbc4'
+        },
+        secondary: {
+          main: '#004d40',
+        },
+      },
+    });
+    
+    const coinsOption = {
+      loop: true,
+      autoplay: true, 
+      animationData: coinsAnimation.default,
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice'
+      }
+    };
+
     return (
       <div>
         <div id="headerLayout">
@@ -72,6 +110,38 @@ class Budget extends Component {
             <span id="parent-element"><AccountBalance/><h4>R{this.state.moneyRemaining} left in the bank</h4></span>
             <span id="parent-element"><CalendarToday/><h4>{this.state.timeRemaining}</h4></span>
         </div>
+
+        <Switch>
+            <Route
+                path={'/'}
+            />
+        </Switch>
+       
+        <Modal
+              isOpen={this.state.showBudgetOnboarding}
+              style={customStyles}
+              contentLabel="Example Modal">
+              <div>
+                  <center>
+                      <h3>This is your Budget view.</h3>
+                      <Helmet>
+                          <style>{'body { background-color: #f8f8f8; }'}</style>
+                      </Helmet><Lottie options={coinsOption}
+                          height={400}
+                          width={400}
+                          isStopped={this.state.isStopped}
+                          isPaused={this.state.isPaused}/>
+                      <MuiThemeProvider theme={theme}>
+                          You are able to add and manage all expenses for the month<br/>
+                          Items can set as recurring. These items will be reset each month<br/>
+                          We've added a sample item. You can view it and remove it if you don't want it.<br/><br/>
+                          <Button variant="outlined" color="primary" style={style} onClick={() => this.exitOnBoarding()}>
+                              Let's get started!
+                          </Button>
+                      </MuiThemeProvider>
+                  </center>
+              </div>
+          </Modal>
         <Helmet>
             <style>{'body { background-color: #DFDFDF; }'}</style>
         </Helmet>
@@ -102,18 +172,43 @@ class Budget extends Component {
 
   getBudget() {
     this.setState({isLoading:true});
-    this.profileService.getBudget(this.state.username).then(
-      (data) => {
-        this.setState({ budgetCategories:data.categories })
-        this.setState({ isLoading:false })
-        this.setState({ amountPaid:data.amountComplete })
-        this.setState({ amountTotal:data.amountTotal })
-        this.setState({ timeRemaining:data.daysLeftThisMonth })
-        this.setState({ outstandingPayments:data.outstandingPaymentAmount })
-        this.setState({ moneyRemaining:data.income });
-        this.setupBudgetState();
-    });
+    if (this.state.username != null || this.state.username != undefined || this.state.username != "") {
+      this.profileService.getBudget(this.state.username).then(
+        (data) => {
+          if (data != null || data != undefined) {
+            this.setState({ budgetCategories:data.categories })
+            this.setState({ amountPaid:data.amountComplete })
+            this.setState({ amountTotal:data.amountTotal })
+            this.setState({ timeRemaining:data.daysLeftThisMonth })
+            this.setState({ outstandingPayments:data.outstandingPaymentAmount })
+            this.setState({ moneyRemaining:data.income });
+          } else {
+            this.setState({ loggedIn:false })
+          }
+          this.setState({ isLoading:false })
+          this.setupBudgetState();
+      });
+    } else {
+      this.navigateBackToLogin();
+    }
   }
 }
+
+const customStyles = {
+  content : {
+      top         : '50%',
+      left        : '50%',
+      right       : 'auto',
+      bottom      : 'auto',
+      marginRight : '-50%',
+      transform   : 'translate(-50%, -50%)',
+      background  : '#f7f6f2'  
+  }
+};
+
+
+const style = {
+  margin: 15,
+};
 
 export default Budget;
