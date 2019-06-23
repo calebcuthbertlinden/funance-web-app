@@ -9,7 +9,7 @@ import Modal from 'react-modal';
 import { AccountBalanceWallet, AccountBalance, CheckCircle, CalendarToday } from '@material-ui/icons';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; 
 import Button from '@material-ui/core/Button';
-import { Switch, BrowserRouter, Route, Link, withRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 class Budget extends Component {
   constructor(props) {
@@ -26,7 +26,6 @@ class Budget extends Component {
       outstandingPayments: 0,
       showBudgetOnboarding:this.props.showBudgetOnboarding
     };
-    var updateAmountPaid = this.updateAmountPaid.bind(this);
   }
 
   componentDidMount() {
@@ -123,9 +122,10 @@ class Budget extends Component {
                           isPaused={this.state.isPaused}/>
                       <MuiThemeProvider theme={theme}>
                           You are able to add and manage all expenses for the month<br/>
-                          Items can set as recurring. These items will be reset each month<br/>
-                          We've added a sample item. You can view it and remove it if you don't want it.<br/><br/>
-                          <Button variant="outlined" color="primary" style={style} onClick={() => this.exitOnBoarding()}>
+                          Each category is for a specific type of payment.<br/>
+                          You will be walked through adding an item for each category.<br/>
+                          Go ahead and try add one.<br/><br/>
+                          <Button variant="contained" color="primary" style={style} onClick={() => this.exitOnBoarding()}>
                               Let's get started!
                           </Button>
                       </MuiThemeProvider>
@@ -179,10 +179,10 @@ class Budget extends Component {
 
   getBudget() {
     this.setState({isLoading:true});
-    if (this.state.username != null || this.state.username != undefined || this.state.username != "") {
+    if (this.state.username !== null || this.state.username !== undefined || this.state.username !== "") {
       this.profileService.getBudget(this.state.username).then(
         (data) => {
-          if (data != null || data != undefined) {
+          if (data !== null || data !== undefined) {
             this.setState({ budgetCategories:data.categories })
             this.setState({ amountPaid:data.amountComplete })
             this.setState({ amountTotal:data.amountTotal })
