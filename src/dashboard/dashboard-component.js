@@ -95,7 +95,7 @@ class Dashboard extends Component {
 
         if (this.state.newUser) {
 
-            if (this.state.step == "STEP_ONE") {
+            if (this.state.step === "STEP_ONE") {
                 return (
                     <div>
                         <MuiThemeProvider theme={theme}>
@@ -162,7 +162,7 @@ class Dashboard extends Component {
                         </MuiThemeProvider>
                     </div>
                 );
-            } else if (this.state.step == "STEP_TWO") {
+            } else if (this.state.step === "STEP_TWO") {
                 return (
                     <div>
                         <MuiThemeProvider theme={theme}>
@@ -230,7 +230,7 @@ class Dashboard extends Component {
                         </MuiThemeProvider>
                     </div>
                 );
-            } else if (this.state.step == "STEP_THREE") {
+            } else if (this.state.step === "STEP_THREE") {
                 return (
                     <div>
                         <MuiThemeProvider theme={theme}>

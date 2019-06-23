@@ -6,10 +6,7 @@ import { MuiThemeProvider, getMuiTheme } from 'material-ui/styles'
 import {teal} from 'material-ui/styles/colors';
 import Button from '@material-ui/core/Button';
 
-import { Replay} from '@material-ui/icons';
-
 import Lottie from 'react-lottie'
-import * as loaderAnimation from '../animations/loader-themed.json'
 import * as coinsAnimation from '../animations/moneystack.json'
 
 class BudgetItem extends Component {

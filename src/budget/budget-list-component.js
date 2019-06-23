@@ -9,7 +9,7 @@ import Modal from 'react-modal';
 import { AccountBalanceWallet, AccountBalance, CheckCircle, CalendarToday } from '@material-ui/icons';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; 
 import Button from '@material-ui/core/Button';
-import { Switch, BrowserRouter, Route, Link, withRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 class Budget extends Component {
   constructor(props) {
@@ -26,7 +26,6 @@ class Budget extends Component {
       outstandingPayments: 0,
       showBudgetOnboarding:this.props.showBudgetOnboarding
     };
-    var updateAmountPaid = this.updateAmountPaid.bind(this);
   }
 
   componentDidMount() {
@@ -180,10 +179,10 @@ class Budget extends Component {
 
   getBudget() {
     this.setState({isLoading:true});
-    if (this.state.username != null || this.state.username != undefined || this.state.username != "") {
+    if (this.state.username !== null || this.state.username !== undefined || this.state.username !== "") {
       this.profileService.getBudget(this.state.username).then(
         (data) => {
-          if (data != null || data != undefined) {
+          if (data !== null || data !== undefined) {
             this.setState({ budgetCategories:data.categories })
             this.setState({ amountPaid:data.amountComplete })
             this.setState({ amountTotal:data.amountTotal })

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Link, withRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import UserService from './services/user-service.js'
 import Dashboard from './dashboard/dashboard-component.js';
   
@@ -11,7 +11,6 @@ import * as incorrectAnimation from './animations/incorrect.json'
 import * as coinsAnimation from './animations/coins.json'
 
 import { Lock, PermIdentity } from '@material-ui/icons';
-import FloatingLabel from "floating-label-react";
 import "floating-label-react/styles.css";
 
 
@@ -88,44 +87,6 @@ class App extends React.Component {
     closeModal() {
         this.setState({isIncorrectInfo: false});
     }
-    
-    handleValidation(){
-        let fields = this.state.fields;
-        let errors = {};
-        let formIsValid = true;
-
-        //Name
-        if(!fields["name"]){
-           formIsValid = false;
-           errors["name"] = "Cannot be empty";
-        }
-
-        if(typeof fields["name"] !== "undefined"){
-           if(!fields["name"].match(/^[a-zA-Z]+$/)){
-              formIsValid = false;
-              errors["name"] = "Only letters";
-           }        
-        }
-
-        //Email
-        if(!fields["email"]){
-           formIsValid = false;
-           errors["email"] = "Cannot be empty";
-        }
-
-        if(typeof fields["email"] !== "undefined"){
-           let lastAtPos = fields["email"].lastIndexOf('@');
-           let lastDotPos = fields["email"].lastIndexOf('.');
-
-           if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields["email"].indexOf('@@') == -1 && lastDotPos > 2 && (fields["email"].length - lastDotPos) > 2)) {
-              formIsValid = false;
-              errors["email"] = "Email is not valid";
-            }
-       }  
-
-       this.setState({errors: errors});
-       return formIsValid;
-   }
 
     render() {
         const defaultOptions = {
@@ -175,7 +136,7 @@ class App extends React.Component {
             },
           });
 
-          if (this.state.username == null || this.state.username == undefined) {
+          if (this.state.username === null || this.state.username === undefined) {
               this.setState({loggedIn:false})
               return (
                 <div>
@@ -577,7 +538,7 @@ class App extends React.Component {
     }
 
     validatePassword() {
-        if (this.state.password != this.state.confirmPassword) {
+        if (this.state.password !== this.state.confirmPassword) {
             this.setState({passwordsMatching:false})
         } else {
             this.setState({passwordsMatching:true})
