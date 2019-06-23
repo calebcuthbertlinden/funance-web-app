@@ -85,30 +85,36 @@ class Category extends Component {
     createBudgetItem() {
         this.setState({isLoading:true});
         var dateString = this.state.startDate.toDateString()
-        this.profileService.createBudgetItem(this.state.username, 
-            this.state.newItemTitle, 
-            this.state.newItemOnceOff, 
-            this.state.category,
-            this.state.newItemCost,
-            dateString,
-            this.state.newItemDescription).then(
-            (data) => {
-                if (this.state.budgetList == null) {
-                    var newBudgetList = [data];
-                    this.setState({budgetList:newBudgetList});
-                } else {
-                    this.setState(previousState => ({
-                        budgetList: [...previousState.budgetList, data]
-                    }));
-                }
 
-                this.props.updateAmountToPay(this.state.newItemCost);
-                this.setState({modalIsOpen:false});
-                this.props.view();  
-                this.setState({isLoading:false});
-           
-        });
-        this.setState({newItemOnceOff:false})
+        if (this.state.newItemTitle !== null && this.state.newItemCost !== null) {
+            this.profileService.createBudgetItem(this.state.username, 
+                this.state.newItemTitle, 
+                this.state.newItemOnceOff, 
+                this.state.category,
+                this.state.newItemCost,
+                dateString,
+                this.state.newItemDescription).then(
+                (data) => {
+                    if (this.state.budgetList == null) {
+                        var newBudgetList = [data];
+                        this.setState({budgetList:newBudgetList});
+                    } else {
+                        this.setState(previousState => ({
+                            budgetList: [...previousState.budgetList, data]
+                        }));
+                    }
+    
+                    this.props.updateAmountToPay(this.state.newItemCost);
+                    this.setState({modalIsOpen:false});
+                    this.props.view();  
+                    this.setState({isLoading:false});
+               
+            });
+            this.setState({newItemOnceOff:false})
+        } else {
+            this.setState({newItemOnceOff:false})
+            this.setState({newItemTitle:"Fill in all the fields goddamit"})
+        }        
     }
     
     render() {
@@ -130,7 +136,6 @@ class Category extends Component {
             }
         };
 
-        
         const theme = createMuiTheme({
             palette: {
               primary: {
@@ -226,14 +231,14 @@ class Category extends Component {
 
             if (this.state.messageSet === false) {
                 switch (this.state.category) {
-                    case "DEBIT_ORDER":
+                    case "RECURRING":
                         this.setState({message:"These are the items that have to be payed every single month, regalrdless of how low the balance is."});
                         break;
                     case "FOOD":
                         this.setState({message:"We've found that outside of the groceries people plan for, this is where alot of the unsupervised spending happens"});
                         break;
-                    case "MISC":
-                        this.setState({message:"TODO //REFACTOR TO 'DAILY' Anything belonging to daily buys here and there"});
+                    case "DAILY":
+                        this.setState({message:"Anything belonging to daily buys here and there"});
                         break;
                     case "CUSTOM":
                         this.setState({message:"The rarer purchases of valuable items. Something out of the ordinary, but not every day."});
@@ -305,10 +310,6 @@ class Category extends Component {
                                     value={this.state.value} onChange={this.handleDescriptionChange}
                                     />
                             </div>
-
-                            <br/>
-                            <input type="checkbox" defaultChecked={this.state.checked} onChange={this.handleOnceOff}/>
-                            Is this a recurring item?
                             <br/>
                             <br/>
                         </div>

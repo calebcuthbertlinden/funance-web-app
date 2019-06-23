@@ -100,11 +100,11 @@ class Dashboard extends Component {
                     <div>
                         <MuiThemeProvider theme={theme}>
                             <ul id="nav">
-                                <li id="nav-left"><Link to="/"><h3>back</h3></Link></li>
-                                <li id="nav-right"><Link to="/profile"><h3>Profile</h3></Link></li>
-                                <li id="nav-right"><Link to="/gameboard"><h3>Gameboard</h3></Link></li>
-                                <li id="nav-right"><Link to="/budget"><h3>Budget</h3></Link></li>
-                                <li id="nav-right"><Link to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
+                                <li id="nav-left"><Link class="nav-item" to="/"><h3>back</h3></Link></li>
+                                <li id="nav-right"><Link class="nav-item" to="/profile"><h3>Profile</h3></Link></li>
+                                <li id="nav-right"><Link class="nav-item" to="/gameboard"><h3>Gameboard</h3></Link></li>
+                                <li id="nav-right"><Link class="nav-item" to="/budget"><h3>Budget</h3></Link></li>
+                                <li id="nav-right"><Link class="nav-item" to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
                             </ul>
                            
                             <Route
@@ -167,11 +167,11 @@ class Dashboard extends Component {
                     <div>
                         <MuiThemeProvider theme={theme}>
                             <ul id="nav">
-                                <li id="nav-left"><Link to="/"><h3>back</h3></Link></li>
-                                <li id="nav-right"><Link to="/profile"><h3>Profile</h3></Link></li>
-                                <li id="nav-right"><Link to="/gameboard"><h3>Gameboard</h3></Link></li>
-                                <li id="nav-right"><Link to="/budget"><h3>Budget</h3></Link></li>
-                                <li id="nav-right"><Link to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
+                                <li id="nav-left"><Link class="nav-item" to="/"><h3>back</h3></Link></li>
+                                <li id="nav-right"><Link class="nav-item" to="/profile"><h3>Profile</h3></Link></li>
+                                <li id="nav-right"><Link class="nav-item" to="/gameboard"><h3>Gameboard</h3></Link></li>
+                                <li id="nav-right"><Link class="nav-item" to="/budget"><h3>Budget</h3></Link></li>
+                                <li id="nav-right"><Link class="nav-item" to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
                             </ul>
                                 
                             <Route
@@ -235,11 +235,11 @@ class Dashboard extends Component {
                     <div>
                         <MuiThemeProvider theme={theme}>
                             <ul id="nav">
-                                <li id="nav-left"><Link to="/"><h3>back</h3></Link></li>
-                                <li id="nav-right"><Link to="/profile"><h3>Profile</h3></Link></li>
-                                <li id="nav-right"><Link to="/gameboard"><h3>Gameboard</h3></Link></li>
-                                <li id="nav-right"><Link to="/budget"><h3>Budget</h3></Link></li>
-                                <li id="nav-right"><Link to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
+                                <li id="nav-left"><Link class="nav-item" to="/"><h3>back</h3></Link></li>
+                                <li id="nav-right"><Link class="nav-item" to="/profile"><h3>Profile</h3></Link></li>
+                                <li id="nav-right"><Link class="nav-item" to="/gameboard"><h3>Gameboard</h3></Link></li>
+                                <li id="nav-right"><Link class="nav-item" to="/budget"><h3>Budget</h3></Link></li>
+                                <li id="nav-right"><Link class="nav-item" to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
                             </ul>
                                 
                             <Route
@@ -305,11 +305,11 @@ class Dashboard extends Component {
                 <div>
                     <MuiThemeProvider theme={theme}>
                         <ul id="nav">
-                            <li id="nav-left"><Link to="/"><h3>back</h3></Link></li>
-                            <li id="nav-right"><Link to="/profile"><h3>Profile</h3></Link></li>
-                            <li id="nav-right"><Link to="/gameboard"><h3>Gameboard</h3></Link></li>
-                            <li id="nav-right"><Link to="/budget"><h3>Budget</h3></Link></li>
-                            <li id="nav-right"><Link to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
+                            <li id="nav-left"><Link class="nav-item" to="/"><h3>back</h3></Link></li>
+                            <li id="nav-right"><Link class="nav-item" to="/profile"><h3>Profile</h3></Link></li>
+                            <li id="nav-right"><Link class="nav-item" to="/gameboard"><h3>Gameboard</h3></Link></li>
+                            <li id="nav-right"><Link class="nav-item" to="/budget"><h3>Budget</h3></Link></li>
+                            <li id="nav-right"><Link class="nav-item" to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
                         </ul>
                             
                         <Route
@@ -354,10 +354,10 @@ class Dashboard extends Component {
     setBasicInfo() {
         this.profileService.updateIncome(this.state.username, this.state.income, this.state.savings, this.state.investments).then(
             (data) => {
+                this.setState({newUser:false});
+                this.setState({showBudgetOnboarding:true})
+                this.props.history.push('/budget');
         });
-        this.setState({newUser:false});
-        this.setState({showBudgetOnboarding:true})
-        this.props.history.push('/budget');
     }
 }
 
