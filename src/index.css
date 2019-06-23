@@ -205,6 +205,28 @@ a { color: #181a19; }
   align-items: center;
 }
 
+.parent-element {
+  padding: 4px 10px 5px 8px;
+  display: flex;
+  align-items: center;
+  float: right;
+}
+
+.parent-element-center {
+  padding: 4px 10px 5px 8px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+#update-income {
+  cursor:'pointer';
+}
+
+#update-income:hover {
+  color:#3ab197;
+}
+
 #onboarding-div {
   /* display: flex; */
   padding-top: 7%;
@@ -315,4 +337,13 @@ a { color: #181a19; }
 
 #login-form{
   width: 65%;
+}
+
+#additem {
+  background: #FFFFFF20;
+  margin: 15px;
+}
+
+#additem:hover {
+  background: #3ab19760;
 }

@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import * as loaderAnimation from '../animations/loader-themed.json'
+import { NoteAdd } from '@material-ui/icons';
+import Fab from '@material-ui/core/Fab';
 
 import Lottie from 'react-lottie'
 import * as animationDebit from '../animations/attachement.json'
@@ -81,43 +83,9 @@ class Category extends Component {
           startDate: date
         });
       }
-
-    createBudgetItem() {
-        this.setState({isLoading:true});
-        var dateString = this.state.startDate.toDateString()
-
-        if (this.state.newItemTitle !== null && this.state.newItemCost !== null) {
-            this.profileService.createBudgetItem(this.state.username, 
-                this.state.newItemTitle, 
-                this.state.newItemOnceOff, 
-                this.state.category,
-                this.state.newItemCost,
-                dateString,
-                this.state.newItemDescription).then(
-                (data) => {
-                    if (this.state.budgetList == null) {
-                        var newBudgetList = [data];
-                        this.setState({budgetList:newBudgetList});
-                    } else {
-                        this.setState(previousState => ({
-                            budgetList: [...previousState.budgetList, data]
-                        }));
-                    }
-    
-                    this.props.updateAmountToPay(this.state.newItemCost);
-                    this.setState({modalIsOpen:false});
-                    this.props.view();  
-                    this.setState({isLoading:false});
-               
-            });
-            this.setState({newItemOnceOff:false})
-        } else {
-            this.setState({newItemOnceOff:false})
-            this.setState({newItemTitle:"Fill in all the fields goddamit"})
-        }        
-    }
     
     render() {
+
         const debitOptions = {
             loop: true,
             autoplay: true, 
@@ -151,8 +119,12 @@ class Category extends Component {
             return (
                 
                 <MuiThemeProvider theme = { theme }>
-                    <div id="outer">
-                        <Button variant="outlined" onClick={this.openModal} primary={true} style={style}>Add another</Button>
+                    <div id="outer">  
+                        <Fab id="additem" variant="extended" type="outline" onClick={this.openModal}>
+                            <NoteAdd />
+                            Add another
+                        </Fab>
+                        {/* <NoteAdd/><Button variant="outlined" onClick={this.openModal} primary={true} style={style}>Add another</Button> */}
                         <div id="inner">
                             {this.state.budgetList.map((uBudgetItem) => (
                                 <BudgetItem updateAmountPaid={this.updateAmountPaid.bind(this)} budgetItem={uBudgetItem}/>
@@ -161,10 +133,11 @@ class Category extends Component {
                         
                     </div>
                     <Modal
-                    isOpen={this.state.modalIsOpen}
-                    onRequestClose={this.closeModal}
-                    style={customStyles}
-                    contentLabel="Example Modal">
+                        isOpen={this.state.modalIsOpen}
+                        onRequestClose={this.closeModal}
+                        style={customStyles}
+                        contentLabel="Example Modal">
+
                     <center>
                         <h3>Add another item</h3>
                         <div>
@@ -255,10 +228,14 @@ class Category extends Component {
                 
                 <MuiThemeProvider theme = { theme }>
                     <div id="outer">
-                        <Button variant="outlined" label="Add new" primary={true} type="outline" style={style} onClick={this.openModal}>Add new</Button>
+                        <Fab id="additem" variant="extended" type="outline" onClick={this.openModal}>
+                            <NoteAdd />
+                            Add new
+                        </Fab>
+                        {/* <NoteAdd/><Button variant="outlined" label="Add new" primary={true} type="outline" style={style} onClick={this.openModal}>Add new</Button> */}
                         <div class="category-empty-description">
                             <center>
-                                <span id="parent-element">
+                                <span className="parent-element">
                                     <Lottie id="animation-lottie" options={debitOptions}
                                         height={150}
                                         width={150}
@@ -270,7 +247,7 @@ class Category extends Component {
                         </div>
                     </div>
 
-                     <Modal
+                    <Modal
                      isOpen={this.state.modalIsOpen}
                      onRequestClose={this.closeModal}
                      style={customStyles}
@@ -318,9 +295,60 @@ class Category extends Component {
                         </center>
                         
                     </Modal>
+
+                     {/* Loader modal */}
+                     <Modal
+                        isOpen={this.state.isLoading}
+                        onRequestClose={this.closeModal}
+                        style={customStyles}
+                        contentLabel="Example Modal">
+                        <div>
+                            <center><Lottie options={loadingOptions}
+                                height={100}
+                                width={100}
+                                isStopped={this.state.isStopped}
+                                isPaused={this.state.isPaused}/>
+                            </center>
+                        </div>
+                    </Modal>
                 </MuiThemeProvider>
             );
         }
+    }
+
+    createBudgetItem() {
+        this.setState({isLoading:true});
+        var dateString = this.state.startDate.toDateString()
+
+        if (this.state.newItemTitle !== null && this.state.newItemCost !== null) {
+            this.profileService.createBudgetItem(this.state.username, 
+                this.state.newItemTitle, 
+                this.state.newItemOnceOff, 
+                this.state.category,
+                this.state.newItemCost,
+                dateString,
+                this.state.newItemDescription).then(
+                (data) => {
+                    if (this.state.budgetList == null) {
+                        var newBudgetList = [data];
+                        this.setState({budgetList:newBudgetList});
+                    } else {
+                        this.setState(previousState => ({
+                            budgetList: [...previousState.budgetList, data]
+                        }));
+                    }
+    
+                    this.props.updateAmountToPay(this.state.newItemCost);
+                    this.setState({modalIsOpen:false});
+                    this.props.view();  
+                    this.setState({isLoading:false});
+               
+            });
+            this.setState({newItemOnceOff:false})
+        } else {
+            this.setState({newItemOnceOff:false})
+            this.setState({newItemTitle:"Fill in all the fields goddamit"})
+        }        
     }
 }
 
