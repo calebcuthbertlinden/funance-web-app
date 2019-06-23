@@ -5,6 +5,7 @@ import {Helmet} from 'react-helmet';
 import Lottie from 'react-lottie'
 import * as loaderAnimation from '../animations/loader-themed.json'
 import * as coinsAnimation from '../animations/coins.json'
+import * as atmCashAnimation from '../animations/atmcash.json';
 import Modal from 'react-modal';
 import { AccountBalanceWallet, AccountBalance, CheckCircle, CalendarToday } from '@material-ui/icons';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; 
@@ -26,8 +27,11 @@ class Budget extends Component {
       outstandingPayments: 0,
       showBudgetOnboarding:this.props.showBudgetOnboarding,
       error:false,
-      errorMessage:""
+      errorMessage:"",
+      updateIncomeValue:0
     };
+    
+    this.handleUpdatedIncome = this.handleUpdatedIncome.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +51,10 @@ class Budget extends Component {
   updateAmountToPay(amountValue) {
     var amount = this.state.outstandingPayments + parseFloat(amountValue);
     this.setState({outstandingPayments:amount});
+  } 
+
+  handleUpdatedIncome(event) {
+    this.setState({updateIncomeValue: event.target.value});
   }
 
   setupBudgetState() {
@@ -59,6 +67,10 @@ class Budget extends Component {
   exitOnBoarding() {
       this.setState({showBudgetOnboarding:false})
       this.props.updateOnboardingSeen();
+  }
+
+  updateIncome() {
+    this.setState({showUpdateIncome:true})
   }
 
   render() {
@@ -92,14 +104,23 @@ class Budget extends Component {
       }
     };
 
+    const atmCash = {
+        loop: true,
+        autoplay: true, 
+        animationData: atmCashAnimation.default,
+        rendererSettings: {
+          preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
+
     return (
       <div>
         <div id="headerLayout">
             <h2 id="budgetHeader">My Budget</h2>
-            <span id="parent-element"><CheckCircle/><h4>{this.state.amountPaid}/{this.state.amountTotal} items payed</h4></span>
-            <span id="parent-element"><AccountBalanceWallet/><h4>R{this.state.outstandingPayments} left to pay</h4></span>
-            <span id="parent-element"><AccountBalance/><h4>R{this.state.moneyRemaining} left in the bank</h4></span>
-            <span id="parent-element"><CalendarToday/><h4>{this.state.timeRemaining}</h4></span>
+            <span className="parent-element"><CheckCircle/><h4>{this.state.amountPaid}/{this.state.amountTotal} items payed</h4></span>
+            <span className="parent-element"><AccountBalanceWallet/><h4>R{this.state.outstandingPayments} left to pay</h4></span>
+            <span className="parent-element" id="update-income" style={{cursor:'pointer'}} onClick={() => this.updateIncome()}><AccountBalance/><h4>R{this.state.moneyRemaining} left in the bank</h4></span>
+            <span className="parent-element"><CalendarToday/><h4>{this.state.timeRemaining}</h4></span>
         </div>
 
         <Switch>
@@ -147,6 +168,39 @@ class Budget extends Component {
                     width={100}
                     isStopped={this.state.isStopped}
                     isPaused={this.state.isPaused}/>
+                </center>
+            </div>
+        </Modal>
+
+        {/* Update income modal */}
+        <Modal
+            isOpen={this.state.showUpdateIncome}
+            onRequestClose={this.closeModal}
+            style={customStyles}
+            contentLabel="Example Modal">
+            <div>
+                <center>
+                  <h3>Update your monthly income</h3>
+                  <Lottie options={atmCash}
+                    height={100}
+                    width={100}
+                    isStopped={this.state.isStopped}
+                    isPaused={this.state.isPaused}/>
+
+                    <div class="field">
+                        <input
+                            type="number"
+                            placeholder="Income"
+                            value={this.state.value} 
+                            onChange={this.handleUpdatedIncome}
+                            />
+                    </div>
+                    
+                    <br/>
+                    <Button variant="contained" color="primary" label="Submit" onClick={() => this.setNewIncome()} style={style}>
+                        Complete
+                    </Button>
+
                 </center>
             </div>
         </Modal>
@@ -208,6 +262,19 @@ class Budget extends Component {
     } else {
       this.navigateBackToLogin();
     }
+  }
+
+  setNewIncome() {
+    this.setState({showUpdateIncome:false});
+    this.setState({isLoading:true});
+    console.log(this.state.updateIncomeValue);
+    if (this.state.updateIncomeValue !== null || this.state.updateIncomeValue !== undefined) {
+      this.profileService.updateIncomeOnly(this.state.username, this.state.updateIncomeValue).then(
+        (data) => {
+          this.setState({isLoading:false});
+          this.setState({moneyRemaining:this.state.updateIncomeValue});
+      });
+    } 
   }
 }
 

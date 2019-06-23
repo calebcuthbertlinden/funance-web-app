@@ -132,6 +132,37 @@ class ProfileService {
       });
   }
 
+  async updateIncomeOnly(username, income) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    console.log("username " + username + " income " + income);
+
+    const options = {
+      method: 'PUT',
+      headers,
+      body: '{' +
+        '"username":"' + username +
+        '","income":' + income + '}'
+    }
+    
+    console.log('{' +
+    '"username":"' + username +
+    '","income":' + income + '}');
+
+    const request = new Request(this.config.MSRV_BASE_URL + "profile/budget/income", options);
+
+    return fetch(request)
+      .then(response => {
+        if (!response.ok) {
+            this.handleResponseError(response);
+        }
+        return response.json();
+      })
+      .catch(error => {
+        this.handleError(error);
+      });
+  }
+
 
   handleResponseError(response) {
     if (response!= null) {
