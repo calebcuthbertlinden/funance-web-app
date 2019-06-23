@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, withRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Link, withRouter, Switch, Route } from 'react-router-dom';
 import UserService from './services/user-service.js'
-import Dashboard from './dashboard-component.js';
+import Dashboard from './dashboard/dashboard-component.js';
   
 import Lottie from 'react-lottie'
 import * as animationData from './animations/scheme.json'
@@ -11,6 +11,9 @@ import * as incorrectAnimation from './animations/incorrect.json'
 import * as coinsAnimation from './animations/coins.json'
 
 import { Lock, PermIdentity } from '@material-ui/icons';
+import FloatingLabel from "floating-label-react";
+import "floating-label-react/styles.css";
+
 
 import {Helmet} from 'react-helmet';
 import './index.css';
@@ -216,7 +219,6 @@ class App extends React.Component {
                                     </form>
 
                                     <br/>
-
                                     <Button variant="contained" color="primary" style={style} onClick={() => this.login()}>Login</Button>
                                 </div>
 
@@ -262,9 +264,7 @@ class App extends React.Component {
                     </center>
                 </div> 
             );
-          }
-          
-          else if (this.state.loggedIn === true) {
+          } else if (this.state.loggedIn === true) {
                 return (
                     <BrowserRouter>
                         <Modal
@@ -286,7 +286,7 @@ class App extends React.Component {
                                         We hope you learn alot.<br/>
                                         We have setup a sample budget item to get you started.<br/>
                                         You've also earned yourself a 100 coins for signing up.<br/><br/>
-                                        <Button variant="outlined" color="primary" label="continue" style={style} onClick={() => this.exitOnBoarding()}>
+                                        <Button variant="contained" color="primary" label="continue" style={style} onClick={() => this.exitOnBoarding()}>
                                             Let's get started!
                                         </Button>
                                     </MuiThemeProvider>
@@ -323,29 +323,14 @@ class App extends React.Component {
                         <Helmet>
                             <style>{'body { background-color: #DFDFDF; }'}</style>
                         </Helmet>
-                        
+
                         <h2>Funance</h2>
                         <h4>Join Funance now. The best way to learn how to manage your finances. </h4>
                         <h4>Keep engagement through being rewarded for checking off your payments</h4>
 
                         <MuiThemeProvider theme = { theme }>
+
                             <div id="register-form">
-
-                                <div class="field">
-                                    <input
-                                        type="text"
-                                        placeholder="Email"
-                                        value={this.state.value} 
-                                        onChange={this.handleEmailChange}
-                                        />
-
-                                    <input
-                                        type="text"
-                                        placeholder="Username"
-                                        value={this.state.value} 
-                                        onChange={this.handleUserNameChange}
-                                        />
-                                </div>
 
                                 <div class="field">
                                     <input
@@ -361,6 +346,23 @@ class App extends React.Component {
                                         value={this.state.value} 
                                         onChange={this.handleLastNameChange}
                                         />
+                                </div>
+
+                                <div class="field">
+                                    <input
+                                        type="text"
+                                        placeholder="Email"
+                                        value={this.state.value} 
+                                        onChange={this.handleEmailChange}
+                                        />
+
+                                    <input
+                                        type="text"
+                                        placeholder="Username"
+                                        value={this.state.value} 
+                                        onChange={this.handleUserNameChange}
+                                        />
+                                        
                                 </div>
                                 
                                 <div class="field">
@@ -389,8 +391,10 @@ class App extends React.Component {
                                 <br/>
                             </div>
                     
-                            <Button variant="outlined" color="secondary" style={style} onClick={() => this.backFromRegister()}>Back</Button>
-                            <Button variant="contained" disabled={!this.state.canRegister} color="primary" style={style} onClick={() => this.register()}>Register</Button>
+                            <Button variant="contained" color="primary" style={style} onClick={() => this.register()}>Register</Button>
+                            <div style={{cursor:'pointer'}} onClick={() => this.backFromRegister()}>
+                                <h5>Not interested?</h5>
+                            </div>
                             
                         </MuiThemeProvider>
                     </div>

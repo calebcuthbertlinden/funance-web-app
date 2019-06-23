@@ -123,9 +123,10 @@ class Budget extends Component {
                           isPaused={this.state.isPaused}/>
                       <MuiThemeProvider theme={theme}>
                           You are able to add and manage all expenses for the month<br/>
-                          Items can set as recurring. These items will be reset each month<br/>
-                          We've added a sample item. You can view it and remove it if you don't want it.<br/><br/>
-                          <Button variant="outlined" color="primary" style={style} onClick={() => this.exitOnBoarding()}>
+                          Each category is for a specific type of payment.<br/>
+                          You will be walked through adding an item for each category.<br/>
+                          Go ahead and try add one.<br/><br/>
+                          <Button variant="contained" color="primary" style={style} onClick={() => this.exitOnBoarding()}>
                               Let's get started!
                           </Button>
                       </MuiThemeProvider>

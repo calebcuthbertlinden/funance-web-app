@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
-import ProfileService from './services/profile-service.js';
-import Budget from './budget/budget-list-component.js';
-import Gameboard from './gameboard/gameboard-component.js';
-import FunancialAdvisor from './gameboard/funancial-advisor.js';
+import { Route, Link, withRouter} from 'react-router-dom';
+import ProfileService from '../services/profile-service.js';
+import Budget from '../budget/budget-list-component.js';
+import Gameboard from '../gameboard/gameboard-component.js';
+import FunancialAdvisor from '../gameboard/funancial-advisor.js';
 
-import * as loaderAnimation from './animations/atmcash.json';
-import * as incorrectAnimation from './animations/moneystack.json';
-import * as coinsAnimation from './animations/coinstack.json';
+import * as loaderAnimation from '../animations/atmcash.json';
+import * as incorrectAnimation from '../animations/moneystack.json';
+import * as coinsAnimation from '../animations/coinstack.json';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; 
 import Button from '@material-ui/core/Button';
@@ -335,12 +335,8 @@ class Dashboard extends Component {
                             component={() => <FunancialAdvisor/>}
                         />
                     </MuiThemeProvider>
-
-                    <div>
-
-                    </div>
                 </div>
-            );
+            );       
         }
     }
 
@@ -361,6 +357,7 @@ class Dashboard extends Component {
         });
         this.setState({newUser:false});
         this.setState({showBudgetOnboarding:true})
+        this.props.history.push('/budget');
     }
 }
 
@@ -368,4 +365,4 @@ const style = {
     margin: 15,
 };
 
-export default Dashboard;
+export default withRouter(Dashboard);
