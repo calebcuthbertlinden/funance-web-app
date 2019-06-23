@@ -13,7 +13,6 @@ import * as coinsAnimation from './animations/coins.json'
 import { Lock, PermIdentity } from '@material-ui/icons';
 import "floating-label-react/styles.css";
 
-
 import {Helmet} from 'react-helmet';
 import './index.css';
 import Modal from 'react-modal';
@@ -142,10 +141,10 @@ class App extends React.Component {
                 <div>
                     <center>
                         <Lottie options={defaultOptions}
-                                            height={200}
-                                            width={400}
-                                            isStopped={this.state.isStopped}
-                                            isPaused={this.state.isPaused}/>
+                            height={200}
+                            width={400}
+                            isStopped={this.state.isStopped}
+                            isPaused={this.state.isPaused}/>
     
                         <h2>Funance</h2>
 
