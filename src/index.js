@@ -33,7 +33,7 @@ class App extends React.Component {
             email:'',
             loggedIn:false,
             registerView:false,
-            isStopped:false,
+            isStopped: false,
             isPaused:false,
             checked:false,
             showOnboarding:false,

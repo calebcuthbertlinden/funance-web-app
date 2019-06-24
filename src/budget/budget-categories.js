@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import * as loaderAnimation from '../animations/loader-themed.json'
-import { NoteAdd } from '@material-ui/icons';
+import { AddCircle } from '@material-ui/icons';
 import Fab from '@material-ui/core/Fab';
 
 import Lottie from 'react-lottie'
@@ -121,7 +121,7 @@ class Category extends Component {
                 <MuiThemeProvider theme = { theme }>
                     <div id="outer">  
                         <Fab id="additem" variant="extended" type="outline" onClick={this.openModal}>
-                            <NoteAdd />
+                            <AddCircle />
                             Add another
                         </Fab>
                         {/* <NoteAdd/><Button variant="outlined" onClick={this.openModal} primary={true} style={style}>Add another</Button> */}
@@ -229,7 +229,7 @@ class Category extends Component {
                 <MuiThemeProvider theme = { theme }>
                     <div id="outer">
                         <Fab id="additem" variant="extended" type="outline" onClick={this.openModal}>
-                            <NoteAdd />
+                            <AddCircle className="padding-right" />
                             Add new
                         </Fab>
                         {/* <NoteAdd/><Button variant="outlined" label="Add new" primary={true} type="outline" style={style} onClick={this.openModal}>Add new</Button> */}
