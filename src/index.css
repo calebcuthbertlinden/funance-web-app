@@ -1,6 +1,7 @@
 body {
     font: 14px "Century Gothic", Futura, sans-serif;
-    margin: 20px;
+    background-image: url("resources/mountain.jpeg");
+    background-color: #cccccc;
 }
 
 .app {
@@ -8,10 +9,22 @@ body {
     grid-template-columns: 10px 1fr 10px;
 }
 .app > * {
-grid-column: 2 / -2;
+    grid-column: 2 / -2;
 }
 .app > .full {
-grid-column: 1 / -1;
+    grid-column: 1 / -1;
+}
+
+.h2 {
+    color: rgb(213, 219, 212);
+}
+
+.h3 { 
+    color: white;
+}
+
+.h4 {
+    color: white;
 }
 
 .hs {
@@ -19,51 +32,318 @@ grid-column: 1 / -1;
     grid-gap: 10px;
     grid-template-columns: repeat(4, calc(25%));
     grid-template-rows: minmax(150px, 1fr);
-    padding: 0 10px;
+    padding: 0 20px;
 }
 
-  /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.category-heading {
+    padding: 1%;
+    background: linear-gradient(-70deg, #333333 60%, #3ab197 60%);
+    /* background: linear-gradient(-70deg, #333333 60%, #69b4be 60%); */
+    box-shadow: 0 4px 8px 0 rgba(26, 22, 22, 0.329);
+    text-align: center;
+    color: #333333;
+    
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(4, calc(20%));
+    grid-template-rows: minmax(30px, 1fr);
+    padding: 0px 10px;
+}
+
+.category-empty-description {
+    padding: 2%;
+    margin: 1%;
+    background: #f7f6f28e;
+    box-shadow: 0 4px 8px 0 rgba(26, 22, 22, 0.329);
+    color: #000000;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(1, calc(100%));
+    grid-template-rows: minmax(50px, 1fr);
+    padding: 15px 0px;
+}
+
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
     background-color: transparent;
-    width: 300px;
-    height: 150px;
-    margin: 3%;
-    perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  }
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(1, calc(100%));
+    grid-template-rows: minmax(100px, 1fr);
+    padding: 5px 0px;
+}
   
-  /* This container is needed to position the front and back side */
-  .flip-card-inner {
+/* This container is needed to position the front and back side */
+.flip-card-inner {
     position: relative;
     width: 100%;
     height: 100%;
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
-  }
+}
   
-  /* Do an horizontal flip when you move the mouse over the flip box container */
-  .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-  }
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
   
-  /* Position the front and back side */
-  .flip-card-front, .flip-card-back {
+/* Position the front and back side */
+.flip-card-front-disabled, .flip-card-front, .flip-card-back {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
+}
+  
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+    color:  #181a19;
+    background: linear-gradient(-90deg, #f7f6f2 100%, #333333 100%);
+    vertical-align: center;
+  }
+
+.flip-card-front-disabled {
+    color: white;
+    background: #333333;
   }
   
-  /* Style the front side (fallback if image is missing) */
-  .flip-card-front {
-    background-color:  #FFFFFF;
-    color: black;
-  }
-  
-  /* Style the back side */
-  .flip-card-back {
-    background-color: rgb(235, 207, 207);
+/* Style the back side */
+.flip-card-back {
+    background-color:#333333;
     color: white;
     transform: rotateY(180deg);
+
   }
+
+.budget-item-button-add {
+    background-color: #606060;
+    color: white;
+  }
+
+a { color: #181a19; }
+    
+#nav {
+  width: 102%;
+  float: left;
+  margin: -1em 0em 1em -1em;
+  padding: 0;
+	overflow: hidden;
+  list-style: none;
+  text-decoration: none;
+  background-color: #f2f2f2;
+  box-shadow: 0 4px 8px 0 rgba(26, 22, 22, 0.329);
+}
+
+#nav-left {
+  float: left; 
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 20px;}
+
+#nav-right {
+  float: right;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 20px;
+}
+
+.nav-item {
+  text-decoration: none;
+}
+
+/* visited link */
+.nav-item:visited {
+  color: rgba(26, 22, 22, 0.329);
+}
+
+/* mouse over link */
+.nav-item:hover {
+  color: #3ab197;
+}
+
+#headerLayout {
+  width: 100%;
+  float: left; 
+  display: block;
+}
+
+#budgetHeader {
+    display: block;
+    float: left;
+    padding: 4px 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #333333;
+}
+
+#progressIndicator {
+    padding: 4px;
+    display: block;
+    float: right;
+    margin: 1%;
+    display: inline-block;
+}
+
+#progressIndicatorIcon {
+  display: block;
+  margin: 1% 0;
+}
+
+#parent-element {
+  padding: 4px 10px 5px 8px;
+  display: flex;
+  align-items: center;
+  float: right;
+}
+
+#parent-element-center {
+  padding: 4px 10px 5px 8px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+.parent-element {
+  padding: 4px 10px 5px 8px;
+  display: flex;
+  align-items: center;
+  float: right;
+}
+
+.parent-element-center {
+  padding: 4px 10px 5px 8px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+#update-income {
+  cursor:'pointer';
+}
+
+#update-income:hover {
+  color:#3ab197;
+}
+
+#onboarding-div {
+  /* display: flex; */
+  padding-top: 7%;
+  align-items: center;
+}
+
+#list-div {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+#outer {
+  display: flex;
+  flex-flow: column;
+  height: 800px;
+}
+
+#inner {
+  flex-grow : 1;
+  background-color: rgba(95, 95, 95, 0.527);
+  padding: 2px;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+#animation-lottie {
+  margin: -2% -2%;
+  padding: -4em -4em;
+}
+
+.field {
+  width: 50%;
+  height: 56px;
+  border-radius: 4px;
+  position: relative;
+  background-color: rgba(255,255,255,0.3);
+  transition: 0.3s all;
+}
+.field:hover {
+  background-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+}
+
+.field input {
+  width: 200px;
+  height: 56px;
+  position: relative;
+  padding: 0px 16px;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Gotham SSm A', 'Gotham SSm B', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  background-color: transparent;
+  color: #282828;
+  outline: none;
+  box-shadow: 0px 4px 20px 0px transparent;
+  transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out, 0.1s padding ease-in-out;
+  -webkit-appearance: none;
+}
+
+#mirrorInput{
+  position: relative;
+  padding: 0px 8px;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Gotham SSm A', 'Gotham SSm B', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  background-color: transparent;
+  color: #282828;
+  outline: none;
+  box-shadow: 0px 4px 20px 0px transparent;
+  transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out, 0.1s padding ease-in-out;
+  -webkit-appearance: none;
+}
+
+.field input::-webkit-input-placeholder {
+  color: #004d4050;
+}
+.field input::-moz-placeholder {
+  color: #004d4050;
+}
+.field input:-ms-input-placeholder {
+  color: #004d4050;
+}
+.field input:-moz-placeholder {
+  color: #004d4050;
+}
+
+.field.focussed input {
+  padding: 24px 16px 8px 16px;
+}
+.field.focussed input + label {
+  top: 4px;
+  opacity: 1;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#register-form{
+  width: 80%;
+}
+
+#login-form{
+  width: 65%;
+}
+
+#additem {
+  background: #FFFFFF20;
+  margin: 15px;
+}
+
+#additem:hover {
+  background: #3ab19760;
+}
