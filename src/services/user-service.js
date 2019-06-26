@@ -80,30 +80,6 @@ class UserService {
       });
   }
 
-  async updateContactNumber(username, contact) {
-
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    const options = {
-      method: 'POST',
-      headers
-    }
-
-    const request = new Request(this.config.MSRV_BASE_URL + "user/contact?username=" + username + "&contact=" + contact, options);
-
-    return fetch(request)
-      .then(response => {
-        if (!response.ok) {
-            this.handleResponseError(response);
-        }
-        return response.json();
-      })
-      .catch(error => {
-        this.handleError(error);
-      });
-  }
-
   handleResponseError(response) {
     if (response!= null) {
       throw new Error("HTTP error, status = " + response.status);
