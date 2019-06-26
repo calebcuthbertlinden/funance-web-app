@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import * as loaderAnimation from '../animations/loader-themed.json'
-import { NoteAdd } from '@material-ui/icons';
+import { AddCircle } from '@material-ui/icons';
 import Fab from '@material-ui/core/Fab';
 
 import Lottie from 'react-lottie'
@@ -121,7 +121,7 @@ class Category extends Component {
                 <MuiThemeProvider theme = { theme }>
                     <div id="outer">  
                         <Fab id="additem" variant="extended" type="outline" onClick={this.openModal}>
-                            <NoteAdd />
+                            <AddCircle className="padding-right" />
                             Add another
                         </Fab>
                         {/* <NoteAdd/><Button variant="outlined" onClick={this.openModal} primary={true} style={style}>Add another</Button> */}
@@ -140,46 +140,58 @@ class Category extends Component {
 
                     <center>
                         <h3>Add another item</h3>
-                        <div>
+                        <div className="input-form">
+                                
+                                <div className="input-section">
+                                    <label>Title</label>
+                                    <br/>
+                                    <div class="field">
+                                        <input
+                                            type="text"
+                                            placeholder="New debit order item"
+                                            value={this.state.value} onChange={this.handleTitleChange}
+                                            />
+                                    </div>
+                                    <br/>
+                                </div>
 
-                            <div class="field">
-                                <input
-                                    type="text"
-                                    placeholder="Title"
-                                    value={this.state.value} onChange={this.handleTitleChange}
-                                    />
-                            </div>
 
-                            <div class="field">
-                                <input
-                                    type="number"
-                                    placeholder="Cost"
-                                    value={this.state.value} onChange={this.handleCostChange}
-                                    />
-                            </div>
-
-                            <div class="field">
-                                <DatePicker
-                                    selected={this.state.startDate}
-                                    onChange={this.handleChange}
+                                <label>Cost</label>
+                                <br/>
+                                <div class="field">
+                                    <input
+                                        type="number"
+                                        placeholder="800"
+                                        value={this.state.value} onChange={this.handleCostChange}
                                         />
-                            </div>
+                                </div>
+                                <br/>
 
-                            <div class="field">
-                                <input
-                                    type="text"
-                                    placeholder="Description"
-                                    value={this.state.value} onChange={this.handleDescriptionChange}
-                                    />
-                            </div>
+                                <label>Payment date</label>
+                                <br/>
+                                <div class="field">
+                                    <DatePicker
+                                        selected={this.state.startDate}
+                                        onChange={this.handleChange}
+                                            />
+                                </div>
+                                <br/>
 
-                            <br/>
-                            <input type="checkbox" defaultChecked={this.state.checked} onChange={this.handleOnceOff}/>
-                            Is this a recurring item?
+                                <label>Description</label>
+                                <br/>
+                                <div class="field">
+                                    <input
+                                        type="text"
+                                        placeholder="This is a new item"
+                                        value={this.state.value} onChange={this.handleDescriptionChange}
+                                        />
+                                </div>
+
                             <br/>
                             <br/>
                         </div>
-                        <Button variant="outlined" color="secondary" style={style} onClick={() => this.createBudgetItem()}>Add item</Button>
+                        <Button variant="outlined" color="secondary" style={style} onClick={() => this.closeModal()}>Cancel</Button>
+                        <Button variant="contained" color="secondary" style={style} onClick={() => this.createBudgetItem()}>Add item</Button>
                         </center>
                     </Modal>
 
@@ -201,7 +213,6 @@ class Category extends Component {
                 </MuiThemeProvider>
             );
         } else {
-
             if (this.state.messageSet === false) {
                 switch (this.state.category) {
                     case "RECURRING":
@@ -229,10 +240,8 @@ class Category extends Component {
                 <MuiThemeProvider theme = { theme }>
                     <div id="outer">
                         <Fab id="additem" variant="extended" type="outline" onClick={this.openModal}>
-                            <NoteAdd />
-                            Add new
+                            <AddCircle className="padding-right" />Add new
                         </Fab>
-                        {/* <NoteAdd/><Button variant="outlined" label="Add new" primary={true} type="outline" style={style} onClick={this.openModal}>Add new</Button> */}
                         <div class="category-empty-description">
                             <center>
                                 <span className="parent-element">
@@ -257,6 +266,46 @@ class Category extends Component {
                         <h3>Add new item</h3>
                         <div>
 
+                            {
+                                this.state.category === "RECURRING" ?
+                                    <div>
+                                        All items have been filled in for your new Rental item. <br/>
+                                        Change the values to suit you and add your first item! <br/>
+                                        <br/>
+                                    </div>
+                                    : null
+                            }
+
+                            {  
+                                this.state.category === "FOOD" ?
+                                    <div>
+                                        All items have been filled in for the coffee you had with breakfast. <br/>
+                                        Change the values to suit you and add your first item! <br/>
+                                        <br/>
+                                    </div>
+                                    : null
+                            }
+
+                            {  
+                                this.state.category === "DAILY" ?
+                                    <div>
+                                        All items have been filled in for your new Rental item. <br/>
+                                        Change the values to suit you and add your first item! <br/>
+                                        <br/>
+                                    </div>
+                                    : null
+                            }
+                        
+                            {  
+                                this.state.category === "CUSTOM" ?
+                                    <div>
+                                        All items have been filled in for your new Rental item. <br/>
+                                        Change the values to suit you and add your first item! <br/>
+                                        <br/>
+                                    </div>
+                                    : null
+                            }
+                            
                             <div class="field">
                                 <input
                                     type="text"
@@ -269,7 +318,7 @@ class Category extends Component {
                                 <input
                                     type="number"
                                     placeholder="Cost"
-                                    value={this.state.value} onChange={this.handleCostChange}
+                                    value="5000" onChange={this.handleCostChange}
                                     />
                             </div>
 
@@ -284,14 +333,15 @@ class Category extends Component {
                                 <input
                                     type="text"
                                     placeholder="Description"
-                                    value={this.state.value} onChange={this.handleDescriptionChange}
+                                    value="Monthly rental payment" onChange={this.handleDescriptionChange}
                                     />
                             </div>
                             <br/>
                             <br/>
                         </div>
                 
-                        <Button variant="outlined" color="secondary" style={style} onClick={() => this.createBudgetItem()}>Add item</Button>
+                        <Button variant="outlined" color="secondary" style={style} onClick={() => this.closeModal()}>Cancel</Button>
+                        <Button variant="contained" color="secondary" style={style} onClick={() => this.createBudgetItem()}>Add item</Button>
                         </center>
                         
                     </Modal>

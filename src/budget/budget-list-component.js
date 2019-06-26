@@ -32,6 +32,7 @@ class Budget extends Component {
     };
     
     this.handleUpdatedIncome = this.handleUpdatedIncome.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount() {
@@ -71,6 +72,10 @@ class Budget extends Component {
 
   updateIncome() {
     this.setState({showUpdateIncome:true})
+  }
+
+  closeModal() {
+    this.setState({showUpdateIncome:false})
   }
 
   render() {
@@ -138,7 +143,8 @@ class Budget extends Component {
                     <h3>This is your Budget view.</h3>
                     <Helmet>
                         <style>{'body { background-color: #f8f8f8; }'}</style>
-                    </Helmet><Lottie options={coinsOption}
+                    </Helmet>
+                    <Lottie options={coinsOption}
                         height={400}
                         width={400}
                         isStopped={this.state.isStopped}
@@ -197,6 +203,9 @@ class Budget extends Component {
                     </div>
                     
                     <br/>
+                    <Button variant="outlined" color="primary" label="Submit" onClick={() => this.closeModal()} style={style}>
+                        Cancel
+                    </Button>
                     <Button variant="contained" color="primary" label="Submit" onClick={() => this.setNewIncome()} style={style}>
                         Complete
                     </Button>

@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Lottie from 'react-lottie'
+import QRCode from '../resources/FUNANCIAL_QR_CODE.png';
 import * as loaderAnimation from '../animations/robot.json';
+import Button from '@material-ui/core/Button';
+import {AddCircleOutline, Sort, TableChart} from '@material-ui/icons';
+import UserService from '../services/user-service';
 
 class FunancialAdvisor extends Component {
 
     constructor(props) {
         super(props);
+        this.userService = new UserService();
         this.state = {
-          username: this.props.username
+          username: this.props.username,
+          showQRCode: false,
+          showSummary: true,
+          linkNumber: false,
+          whatsappNumber:0,
+          hasWhatsappNumber:false
         };
+        this.handleWhatsauppNumberChange = this.handleWhatsauppNumberChange.bind(this);
       }
 
       render() {
@@ -47,9 +58,55 @@ class FunancialAdvisor extends Component {
                     <br/>
                     <div>         
                         <h2>Your Funancial advisor</h2>                
-                        <h3>Send a whatsapp to +1 415 523 8886 with code join moment-chain</h3>
-                        <h5>Your funancial advisor is there to answer your every need.</h5>
-                        <h5>Just send it a whatsapp and it'll help you out!</h5>
+                        <Button variant="outlined" color="secondary" onClick={() => this.showSummary()}>About</Button>  
+                            <Button variant="outlined" color="secondary" onClick={() => this.showQRCode()}>Linking details</Button> 
+                            <Button variant="outlined" color="secondary" onClick={() => this.showLinkWhatsapp()}>Add whatsapp number</Button> 
+                            {
+                                this.state.showSummary ?
+                                    <div>
+                                        <h4>Your funancial advisor is there to answer your every need.</h4>
+                                        <h4>You can message her to get information about your budget or to add items to it.</h4>
+                                        <ul id="funancial-list">
+                                            <li className="funancial-list-item"><AddCircleOutline className="padding-right"/>Add item to budget</li>
+                                            <li className="funancial-list-item"><Sort className="padding-right"/>Get a summary of your budget</li>
+                                            <li className="funancial-list-item"><TableChart className="padding-right"/>Get outstanding items</li>                                          
+                                        </ul>
+                                    </div>
+                                    :null
+                            }
+                            {
+                                this.state.showQRCode ?
+                                    <div>
+                                        <h4>Scan the code below to add your funancial advisor to your contacts.</h4>      
+                                        <h4>Send her a whatsapp with code <span id="accent-color">join moment-chain</span></h4>
+                                        <img src={QRCode}/>
+                                    </div>
+                                    :null
+                            }
+                            {
+                                this.state.linkNumber ?
+                                    this.state.hasWhatsappNumber ?
+                                        <div>
+                                            <h4>Your phone is linked to </h4>
+                                        </div>
+                                        :<div>
+                                            <h4>Link your whatsapp number so your Funancial advisor can recognise you</h4>
+                                            <MuiThemeProvider theme = { theme }>
+                                                <div class="field">
+                                                    <input
+                                                        type="text"
+                                                        placeholder="+27 64 752 0016"
+                                                        value={this.state.value} 
+                                                        onChange={this.handleWhatsauppNumberChange}
+                                                        />
+                                                </div>
+                                                <br/>
+                                                <br/>
+                                                <Button variant="contained" color="primary" onClick={() => this.setProfileContact()} >Submit</Button>
+                                            </MuiThemeProvider>
+                                        </div>
+                                    :null
+                            }
                     </div>
                 </div>
             </center>   
@@ -58,6 +115,35 @@ class FunancialAdvisor extends Component {
           </div>
         );
       }
+      
+       showQRCode() {
+            this.setState({showQRCode:true})
+            this.setState({showSummary:false})
+            this.setState({linkNumber:false})
+        }
+
+        showSummary() {
+            this.setState({showQRCode:false})
+            this.setState({showSummary:true})
+            this.setState({linkNumber:false})
+        }
+
+        showLinkWhatsapp() {
+            this.setState({showQRCode:false})
+            this.setState({showSummary:false})
+            this.setState({linkNumber:true})
+        }
+
+        handleWhatsauppNumberChange(event) {
+            this.setState({whatsappNumber: event.target.value});
+          }
+
+        setProfileContact() {
+            this.userService.updateContactNumber(this.state.username, this.state.whatsappNumber).then(
+                () => {
+                    this.setState({hasWhatsappNumber:true})
+              });
+        }
     }
     
 export default FunancialAdvisor;
