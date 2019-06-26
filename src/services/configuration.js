@@ -1,4 +1,4 @@
 class Configuration {
-    MSRV_BASE_URL = "http://localhost:8085/funance-msrv/";
+    MSRV_BASE_URL = "https://funance-msrv.azurewebsites.net/";
   }
 export default Configuration;
