@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import UserService from './services/user-service.js'
 import Dashboard from './dashboard/dashboard-component.js';
+import Budget from './budget/budget-list-component.js';
   
 import Lottie from 'react-lottie'
 import * as animationData from './animations/scheme.json'
@@ -33,7 +34,7 @@ class App extends React.Component {
             email:'',
             loggedIn:false,
             registerView:false,
-            isStopped:false,
+            isStopped: false,
             isPaused:false,
             checked:false,
             showOnboarding:false,
@@ -257,14 +258,15 @@ class App extends React.Component {
                             <style>{'body { background-color: #f8f8f8; }'}</style>
                         </Helmet>
                         <Switch>
-                            <Route
-                                path={'/'}
-                                component={() => <Dashboard
+                                <Route
+                                    path={'/'}
+                                    component={() => <Dashboard
                                     username={this.state.username}
                                     newUser={this.state.newUser}
-                                />}
-                            />
+                                    />}
+                                />                            
                         </Switch>
+                        
                     </BrowserRouter>
                 )
         } else if (this.state.registerView === true) {

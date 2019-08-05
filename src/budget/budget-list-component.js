@@ -152,8 +152,7 @@ class Budget extends Component {
                     <MuiThemeProvider theme={theme}>
                         You are able to add and manage all expenses for the month<br/>
                         Each category is for a specific type of payment.<br/>
-                        You will be walked through adding an item for each category.<br/>
-                        Go ahead and try add one.<br/><br/>
+                        Go ahead and try add an item, it's easy to follow.<br/><br/>
                         <Button variant="contained" color="primary" style={style} onClick={() => this.exitOnBoarding()}>
                             Let's get started!
                         </Button>

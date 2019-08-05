@@ -48,24 +48,25 @@ class FunancialAdvisor extends Component {
         return (
           <div>
             <MuiThemeProvider theme={theme}>
-            <center>         
-                <div id="onboarding-div">
-                    <Lottie options={stepOne}
-                        height={200}
-                        width={200}
-                        isStopped={this.state.isStopped}
-                        isPaused={this.state.isPaused}/>
-                    <br/>
-                    <div>         
-                        <h2>Your Funancial advisor</h2>                
-                        <Button variant="outlined" color="secondary" onClick={() => this.showSummary()}>About</Button>  
+                <center>         
+                    <div id="onboarding-div">
+                        <Lottie options={stepOne}
+                            height={200}
+                            width={200}
+                            isStopped={this.state.isStopped}
+                            isPaused={this.state.isPaused}/>
+                        <div>         
+                            <h2>Your Funancial advisor</h2>
+                            <Button variant="outlined" color="secondary" onClick={() => this.showSummary()}>About</Button>  
+
                             <Button variant="outlined" color="secondary" onClick={() => this.showQRCode()}>Linking details</Button> 
                             <Button variant="outlined" color="secondary" onClick={() => this.showLinkWhatsapp()}>Add whatsapp number</Button> 
                             {
                                 this.state.showSummary ?
                                     <div>
                                         <h4>Your funancial advisor is there to answer your every need.</h4>
-                                        <h4>You can message her to get information about your budget or to add items to it.</h4>
+                                        <h4>She is just one Whatsapp message away.</h4>
+                                        <h4>You can message her to get information about your budget or to add items to it wherever you are.</h4>
                                         <ul id="funancial-list">
                                             <li className="funancial-list-item"><AddCircleOutline className="padding-right"/>Add item to budget</li>
                                             <li className="funancial-list-item"><Sort className="padding-right"/>Get a summary of your budget</li>
@@ -77,7 +78,7 @@ class FunancialAdvisor extends Component {
                             {
                                 this.state.showQRCode ?
                                     <div>
-                                        <h4>Scan the code below to add your funancial advisor to your contacts.</h4>      
+                                        <h4>Scan the code below to add your funancial advisor to your contacts.</h4>
                                         <h4>Send her a whatsapp with code <span id="accent-color">join moment-chain</span></h4>
                                         <img src={QRCode}/>
                                     </div>
@@ -87,7 +88,7 @@ class FunancialAdvisor extends Component {
                                 this.state.linkNumber ?
                                     this.state.hasWhatsappNumber ?
                                         <div>
-                                            <h4>Your phone is linked to </h4>
+                                            <h4>Your phone is linked!</h4>
                                         </div>
                                         :<div>
                                             <h4>Link your whatsapp number so your Funancial advisor can recognise you</h4>
@@ -107,16 +108,15 @@ class FunancialAdvisor extends Component {
                                         </div>
                                     :null
                             }
+                        </div>
                     </div>
-                </div>
-            </center>   
-
+                </center>   
             </MuiThemeProvider>
           </div>
         );
       }
       
-       showQRCode() {
+        showQRCode() {
             this.setState({showQRCode:true})
             this.setState({showSummary:false})
             this.setState({linkNumber:false})

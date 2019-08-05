@@ -32,7 +32,11 @@ class Category extends Component {
             newItemDate:"",
             startDate: new Date(),
             newItemOnceOff:false,
-            newItemDescription:false
+            newItemDescription:false,
+            titleplaceholder: "new item",
+            costPlaceholder: 0,
+            descriptionPlaceholder: "new item",
+
         };
 
         this.profileService = new ProfileService();
@@ -148,7 +152,7 @@ class Category extends Component {
                                     <div class="field">
                                         <input
                                             type="text"
-                                            placeholder="New debit order item"
+                                            placeholder="New item"
                                             value={this.state.value} onChange={this.handleTitleChange}
                                             />
                                     </div>
@@ -217,15 +221,27 @@ class Category extends Component {
                 switch (this.state.category) {
                     case "RECURRING":
                         this.setState({message:"These are the items that have to be payed every single month, regalrdless of how low the balance is."});
+                        this.setState({titleplaceholder:"Rent"});
+                        this.setState({costPlaceholder:5000});
+                        this.setState({descriptionPlaceholder:"Rental payment to my landlord"});
                         break;
                     case "FOOD":
                         this.setState({message:"We've found that outside of the groceries people plan for, this is where alot of the unsupervised spending happens"});
+                        this.setState({titleplaceholder:"M&B Cappucino"});
+                        this.setState({costPlaceholder:30});
+                        this.setState({descriptionPlaceholder:"Morning coffee"});
                         break;
                     case "DAILY":
                         this.setState({message:"Anything belonging to daily buys here and there"});
+                        this.setState({titleplaceholder:"Airtime"});
+                        this.setState({costPlaceholder:110});
+                        this.setState({descriptionPlaceholder:"Needed to buy data"});
                         break;
                     case "CUSTOM":
                         this.setState({message:"The rarer purchases of valuable items. Something out of the ordinary, but not every day."});
+                        this.setState({titleplaceholder:"Playstation"});
+                        this.setState({costPlaceholder:4500});
+                        this.setState({descriptionPlaceholder:"Been saving for this :D"});
                         break;
                     default:
                         this.setState({message:"Unknown category"});
@@ -263,7 +279,7 @@ class Category extends Component {
                      contentLabel="Example Modal">
                     
                     <center>
-                        <h3>Add new item</h3>
+                        <h3>Add new {this.state.category} item</h3>
                         <div>
 
                             {
@@ -289,7 +305,7 @@ class Category extends Component {
                             {  
                                 this.state.category === "DAILY" ?
                                     <div>
-                                        All items have been filled in for your new Rental item. <br/>
+                                        All items have been filled in for the airtime you bought earlier. <br/>
                                         Change the values to suit you and add your first item! <br/>
                                         <br/>
                                     </div>
@@ -299,45 +315,63 @@ class Category extends Component {
                             {  
                                 this.state.category === "CUSTOM" ?
                                     <div>
-                                        All items have been filled in for your new Rental item. <br/>
+                                        All items have been filled in for the playsatation you were saving for. <br/>
                                         Change the values to suit you and add your first item! <br/>
                                         <br/>
                                     </div>
                                     : null
                             }
-                            
-                            <div class="field">
-                                <input
-                                    type="text"
-                                    placeholder="Title"
-                                    value={this.state.value} onChange={this.handleTitleChange}
-                                    />
-                            </div>
 
-                            <div class="field">
-                                <input
-                                    type="number"
-                                    placeholder="Cost"
-                                    value="5000" onChange={this.handleCostChange}
-                                    />
-                            </div>
+                            <div className="input-form">
+                                
+                                <div className="input-section">
+                                    <label>Title</label>
+                                    <br/>
+                                    <div class="field">
+                                        <input
+                                            type="text"
+                                            placeholder={this.state.titleplaceholder}
+                                            value={this.state.value} onChange={this.handleTitleChange}
+                                            />
+                                    </div>
+                                    <br/>
+                                    </div>
 
-                            <div class="field">
-                                <DatePicker                         
-                                    selected={this.state.startDate}
-                                    onChange={this.handleChange}
-                                        />
-                            </div>
+                                    <label>Cost</label>
+                                    <br/>
+                                    <div class="field">
+                                        <input
+                                            type="number"
+                                            placeholder={this.state.costPlaceholder}
+                                            value={this.state.value} onChange={this.handleCostChange}
+                                            />
+                                    </div>
+                                    <br/>
 
-                            <div class="field">
-                                <input
-                                    type="text"
-                                    placeholder="Description"
-                                    value="Monthly rental payment" onChange={this.handleDescriptionChange}
-                                    />
+                                    <label>Payment date</label>
+                                    <br/>
+                                    <div class="field">
+                                        <DatePicker
+                                            selected={this.state.startDate}
+                                            onChange={this.handleChange}
+                                                />
+                                    </div>
+                                    <br/>
+
+                                    <label>Description</label>
+                                    <br/>
+                                    <div class="field">
+                                        <input
+                                            type="text"
+                                            placeholder={this.state.descriptionPlaceholder}
+                                            value={this.state.value} onChange={this.handleDescriptionChange}
+                                            />
+                                    </div>
+
+                                <br/>
+                                <br/>
+
                             </div>
-                            <br/>
-                            <br/>
                         </div>
                 
                         <Button variant="outlined" color="secondary" style={style} onClick={() => this.closeModal()}>Cancel</Button>
