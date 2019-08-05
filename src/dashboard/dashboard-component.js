@@ -103,8 +103,8 @@ class Dashboard extends Component {
                     <div>
                         <MuiThemeProvider theme={theme}>
                             <ul id="nav">
-                                <li id="nav-left"><Link class="nav-item" to="/"></Link></li>
-                                <li id="nav-right"><Link class="nav-item" to="/profile"><h3>Profile</h3></Link></li>
+                                <li id="nav-left"><h3>FUNANCE</h3></li>
+                                <li id="nav-right"><Link class="nav-item" to="/"><Input className="padding-right"/></Link></li>
                                 <li id="nav-right"><Link class="nav-item" to="/gameboard"><h3>Gameboard</h3></Link></li>
                                 <li id="nav-right"><Link class="nav-item" to="/budget"><h3>Budget</h3></Link></li>
                                 <li id="nav-right"><Link class="nav-item" to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
@@ -130,7 +130,7 @@ class Dashboard extends Component {
 
                             <Route
                                 path={'/funancial-advisor'}
-                                component={() => <FunancialAdvisor/>}
+                                component={() => <FunancialAdvisor username={this.state.username}/>}
                             />
     
                             <center>         
@@ -143,7 +143,8 @@ class Dashboard extends Component {
         
                                     <div>
                                         What is your total income for the month? This includes your salary, any ad-hoc payments.<br/>
-                                        Essentially anything coming into your account.
+                                        Anything coming into your account. <br/>
+                                        This will be used to track how much money you have left at any given time.
                                         <br/>
                                         <br/>
                                         <div class="field">
@@ -170,8 +171,8 @@ class Dashboard extends Component {
                     <div>
                         <MuiThemeProvider theme={theme}>
                             <ul id="nav">
-                                <li id="nav-left"><Link class="nav-item" to="/"><h3>back</h3></Link></li>
-                                <li id="nav-right"><Link class="nav-item" to="/profile"><h3>Profile</h3></Link></li>
+                                <li id="nav-left"><h3>FUNANCE</h3></li>
+                                <li id="nav-right"><Link class="nav-item" to="/"><Input className="padding-right"/></Link></li>
                                 <li id="nav-right"><Link class="nav-item" to="/gameboard"><h3>Gameboard</h3></Link></li>
                                 <li id="nav-right"><Link class="nav-item" to="/budget"><h3>Budget</h3></Link></li>
                                 <li id="nav-right"><Link class="nav-item" to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
@@ -197,7 +198,7 @@ class Dashboard extends Component {
                             
                             <Route
                                 path={'/funancial-advisor'}
-                                component={() => <FunancialAdvisor/>}
+                                component={() => <FunancialAdvisor username={this.state.username}/>}
                             />
     
                             <center>         
@@ -238,8 +239,8 @@ class Dashboard extends Component {
                     <div>
                         <MuiThemeProvider theme={theme}>
                             <ul id="nav">
-                                <li id="nav-left"><Link class="nav-item" to="/"><h3>back</h3></Link></li>
-                                <li id="nav-right"><Link class="nav-item" to="/profile"><h3>Profile</h3></Link></li>
+                                <li id="nav-left"><h3>FUNANCE</h3></li>
+                                <li id="nav-right"><Link class="nav-item" to="/"><Input className="padding-right"/></Link></li>
                                 <li id="nav-right"><Link class="nav-item" to="/gameboard"><h3>Gameboard</h3></Link></li>
                                 <li id="nav-right"><Link class="nav-item" to="/budget"><h3>Budget</h3></Link></li>
                                 <li id="nav-right"><Link class="nav-item" to="/funancial-advisor"><h3>Funancial Advisor</h3></Link></li>
@@ -265,7 +266,7 @@ class Dashboard extends Component {
 
                             <Route
                                 path={'/funancial-advisor'}
-                                component={() => <FunancialAdvisor/>}
+                                component={() => <FunancialAdvisor username={this.state.username}/>}
                             />
     
                             <center>         
@@ -308,7 +309,7 @@ class Dashboard extends Component {
                 <div>
                     <MuiThemeProvider theme={theme}>
                         <ul id="nav">
-                            <img id="nav-left" />
+                            <li id="nav-left"><h3>FUNANCE</h3></li>
                             <li id="nav-right"><Link class="nav-item" to="/"><Input className="padding-right"/></Link></li>
                             <li id="nav-right"><Link class="nav-item" to="/gameboard"><h3>Gameboard</h3></Link></li>
                             <li id="nav-right"><Link class="nav-item" to="/budget"><h3>Budget</h3></Link></li>
@@ -335,13 +336,14 @@ class Dashboard extends Component {
                         
                         <Route
                             path={'/funancial-advisor'}
-                            component={() => <FunancialAdvisor/>}
+                            component={() => <FunancialAdvisor username={this.state.username}/>}
                         />
                     </MuiThemeProvider>
                 </div>
             );       
-        }
-    }
+            
+        } 
+    } 
 
     getDashboard() {
         this.profileService.getDashboard(this.state.username).then(

@@ -61,7 +61,7 @@ class BudgetItem extends Component {
             <div class="flip-card">
               <div class="flip-card-inner">
                 <div class="flip-card-front-disabled">
-                    <h3 class="card-title">{this.state.budgetItem.title}</h3>
+                    <h3 class="card-title">Payed: {this.state.budgetItem.title}</h3>
                     <Lottie options={coinsOption}
                           height={50}
                           width={50}

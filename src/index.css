@@ -58,7 +58,7 @@ body {
     color: #000000;
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: repeat(1, calc(100%));
+    grid-template-columns: repeat(1, calc(90%));
     grid-template-rows: minmax(50px, 1fr);
     padding: 15px 0px;
 }
@@ -202,7 +202,7 @@ a { color: #181a19; }
   padding: 4px 10px 5px 8px;
   display: flex;
   text-align: center;
-  align-items: center;
+  margin: 0 auto;
 }
 
 .parent-element {
@@ -215,6 +215,13 @@ a { color: #181a19; }
 .parent-element-center {
   padding: 4px 10px 5px 8px;
   display: flex;
+  text-align: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.parent-center {
+  padding: 4px 10px 5px 8px;
   text-align: center;
   align-items: center;
 }

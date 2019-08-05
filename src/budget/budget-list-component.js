@@ -32,6 +32,7 @@ class Budget extends Component {
     };
     
     this.handleUpdatedIncome = this.handleUpdatedIncome.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount() {
@@ -71,6 +72,10 @@ class Budget extends Component {
 
   updateIncome() {
     this.setState({showUpdateIncome:true})
+  }
+
+  closeModal() {
+    this.setState({showUpdateIncome:false})
   }
 
   render() {
@@ -138,7 +143,8 @@ class Budget extends Component {
                     <h3>This is your Budget view.</h3>
                     <Helmet>
                         <style>{'body { background-color: #f8f8f8; }'}</style>
-                    </Helmet><Lottie options={coinsOption}
+                    </Helmet>
+                    <Lottie options={coinsOption}
                         height={400}
                         width={400}
                         isStopped={this.state.isStopped}
@@ -146,8 +152,7 @@ class Budget extends Component {
                     <MuiThemeProvider theme={theme}>
                         You are able to add and manage all expenses for the month<br/>
                         Each category is for a specific type of payment.<br/>
-                        You will be walked through adding an item for each category.<br/>
-                        Go ahead and try add one.<br/><br/>
+                        Go ahead and try add an item, it's easy to follow.<br/><br/>
                         <Button variant="contained" color="primary" style={style} onClick={() => this.exitOnBoarding()}>
                             Let's get started!
                         </Button>
@@ -197,6 +202,9 @@ class Budget extends Component {
                     </div>
                     
                     <br/>
+                    <Button variant="outlined" color="primary" label="Submit" onClick={() => this.closeModal()} style={style}>
+                        Cancel
+                    </Button>
                     <Button variant="contained" color="primary" label="Submit" onClick={() => this.setNewIncome()} style={style}>
                         Complete
                     </Button>
