@@ -321,7 +321,7 @@ class Category extends Component {
                                     </div>
                                     : null
                             }
-                            
+
                             <div className="input-form">
                                 
                                 <div className="input-section">
@@ -370,6 +370,7 @@ class Category extends Component {
 
                                 <br/>
                                 <br/>
+
                             </div>
                         </div>
                 

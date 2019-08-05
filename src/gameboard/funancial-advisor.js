@@ -58,6 +58,7 @@ class FunancialAdvisor extends Component {
                         <div>         
                             <h2>Your Funancial advisor</h2>
                             <Button variant="outlined" color="secondary" onClick={() => this.showSummary()}>About</Button>  
+
                             <Button variant="outlined" color="secondary" onClick={() => this.showQRCode()}>Linking details</Button> 
                             <Button variant="outlined" color="secondary" onClick={() => this.showLinkWhatsapp()}>Add whatsapp number</Button> 
                             {
@@ -114,7 +115,7 @@ class FunancialAdvisor extends Component {
           </div>
         );
       }
-
+      
         showQRCode() {
             this.setState({showQRCode:true})
             this.setState({showSummary:false})
